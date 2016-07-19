@@ -1,0 +1,6 @@
+#game_field {
+	margin: 8px auto;
+	display: block;
+	border: 1px solid #ccc;
+	background:url('./images/background_-_blank.jpg');
+}
