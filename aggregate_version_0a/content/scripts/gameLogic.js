@@ -8,7 +8,9 @@ var frameRate = 30;
 
 var renderLoop = function() {
     ctx.beginPath();
-    ctx.clearRect(0,0,game_field.width,game_field.height);  //Clear game field
+    ctx.clearRect(0,0,game_field.width,game_field.height);  //Clear game field+
+    //Test to draw tower placing toggle
+    newTowerButton.draw();
     // Draw Health
     hearts.draw();
     // Draw Coins
@@ -25,6 +27,7 @@ var renderLoop = function() {
 };
 
 var logicLoop = function() {
+    
     // Add towers to game <<TEST>>
     if (towerList.length < 1) {
         placeTower(300,200)

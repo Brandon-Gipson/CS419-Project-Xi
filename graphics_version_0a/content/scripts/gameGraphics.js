@@ -120,5 +120,10 @@ var newTowerButton = {
   draw: function() {
     ctx.fillStyle="gray";
     ctx.fillRect(this.x, this.y, this.height, this.width);
+    ctx.fillStyle = "gold";
+    ctx.font = "Bold 20px Arial";
+    ctx.textAlgn = "left";
+    ctx.textBaseline = "top";
+    ctx.fillText("T", 33, 575);
   }
 }
