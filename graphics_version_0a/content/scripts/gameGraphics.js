@@ -40,7 +40,7 @@ var hearts = {
       if (this.current == this.max) {
         var i = 0;
         for(var j = 0; j < heartsToDisplay; j++) {
-          ctx.drawImage(fullHeartImage, (this.x + i), this.y, 55, 50);
+          ctx.drawImage(fullHeartImage, (this.x + i), this.y, 57, 50);
           i += 40;
         }
       }
@@ -48,7 +48,7 @@ var hearts = {
       if (heartsToDisplay < this.max && this.current == Math.floor(this.current)) {
         i = 0;
         for(j = 0; j < heartsToDisplay; j++) {
-          ctx.drawImage(fullHeartImage, (this.x + i), this.y, 55, 50);
+          ctx.drawImage(fullHeartImage, (this.x + i), this.y, 57, 50);
           i += 40;
         }
         
@@ -61,7 +61,7 @@ var hearts = {
       if (this.current != Math.floor(this.current)) {
         i = 0;
         for(j = 1; j < heartsToDisplay; j++) {
-          ctx.drawImage(fullHeartImage, (this.x + i), this.y, 55, 50);
+          ctx.drawImage(fullHeartImage, (this.x + i), this.y, 57, 50);
           i += 40;
         }
         
@@ -105,3 +105,20 @@ var coins = {
     ctx.fillText(this.amount, 970, 10);
   }
 };
+
+/******************************************
+ * A button that toggles to let you place 
+ * a tower on the map
+ * **************************************/
+var newTowerButton = {
+  press: false,
+  width: 20,
+  height: 20,
+  x: 30,
+  y: 575,
+  
+  draw: function() {
+    ctx.fillStyle="gray";
+    ctx.fillRect(this.x, this.y, this.height, this.width);
+  }
+}

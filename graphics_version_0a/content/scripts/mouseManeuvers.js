@@ -8,16 +8,21 @@
     var mouseX = 0;
 	var mouseY = 0;
 	var hit = false;
-	var press = false;
+	//var press = false;
 		
 	//getting mouse position and offsets it by canvas boundry
 	var bRect = game_field.getBoundingClientRect(); //get the boundary of the canvas
  mouseX = event.clientX - bRect.left;
  mouseY = event.clientY - bRect.top;
  
- press = hitTest(buttonAddTower, mx, my);
+ if((newTowerButton.x <= mouseX) && (newTowerButton.x + newTowerButton.width >= mouseX) && (newTowerButton.y <= mouseY) && (newTowerButton.y + newTowerButton.height >= mouseY)){
+  newTowerButton.press = true;
+  return;
+  
+ }
+ 
    
- if(press) {
+ if(newTowerButton.press) {
  //checks towerList to see if click is inside existing tower
   for (var i in towerList) {
    hit = hitTest(towerList[i], mouseX, mouseY);
@@ -31,7 +36,7 @@
  	if (!hit) {
  	    placeTower(mouseX-5, mouseY-5); //We can edit this to snap more to the grid
  	                                   //Though I haven't though about how yet
- 	    press = false;
+ 	    newTowerButton.press = false;
  	}
  }
 	
