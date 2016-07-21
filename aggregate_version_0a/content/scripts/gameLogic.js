@@ -5,6 +5,7 @@ var ctx = game_field.getContext('2d');
 ctx.shadowBlur = "black";
 ctx.shadowBlur = 20;
 var frameRate = 30;
+var delay = 25;  // Unit Delay <<TEST>>
 
 var renderLoop = function() {
     ctx.beginPath();
@@ -27,31 +28,13 @@ var renderLoop = function() {
 };
 
 var logicLoop = function() {
-    
-    // Add towers to game <<TEST>>
-    if (towerList.length < 1) {
-        placeTower(300,200)
-    }
     // Add units to game <<TEST>>
-    if (unitList.length < 1) {
+    if (delay < 0) {
         addUnit();
-        unitList[0].setImage("red");
-        // Cycle Gems in Tower <<TEST>>
-        if (towerList[0].slot1.color == "gray") {
-            towerList[0].updateGem("salmon",1);
-        }
-        else if (towerList[0].slot2.color == "gray") {
-            towerList[0].updateGem("lime",2);
-        }
-        else if (towerList[0].slot3.color == "gray") {
-            towerList[0].updateGem("cyan",3);
-        }
-        else {
-            for (var i = 1; i <= 3; i++) {
-                towerList[0].clearGem(i);
-            }
-        }
+        delay = 25;  // Reset delay
     }
+    delay--;
+    
     // Replace Hearts
     if (hearts.current <= 0) {
         hearts.current = 5;

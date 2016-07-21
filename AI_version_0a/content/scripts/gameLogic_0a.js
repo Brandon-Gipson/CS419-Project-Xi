@@ -4,7 +4,7 @@
 var game_field = document.getElementById('game_field');
 var ctx = game_field.getContext('2d');
 var frameRate = 30;
-
+var delay = 25;
 
 var renderLoop = function() {
     ctx.beginPath();
@@ -17,9 +17,14 @@ var renderLoop = function() {
 
 var logicLoop = function() {
     // Add units to game
-    if (unitList.length < 1) {
+    //if (unitList.length < 1) {
+    //    addUnit();
+    //}
+    if (delay < 0) {
         addUnit();
+        delay = 25;  // Reset delay
     }
+    delay--;
     // Move units through game field
     for (var i = 0; i < unitList.length; i++) {
         unitList[i].move();
