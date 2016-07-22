@@ -10,8 +10,8 @@ function tower(x,y) {
   this.y = y;
   this.width = 40;
   this.height = 40;
-  this.centerX = (this.x + this.width) / 2;
-  this.centerY = (this.y + this.height) / 2;
+  this.centerX = this.x + (this.width / 2);
+  this.centerY = this.y + (this.height / 2);
   this.damage = 2;
   this.rof = 0; 
   this.range = 100;
@@ -86,18 +86,19 @@ function tower(x,y) {
     ctx.fillRect(this.x + 22, this.y + 22, 10, 10);
   };
   
-  /*************************************************
+
+   /*************************************************
    * Creates laser object and draws a line from the
    * tower to the enemy. It's a work in progress
    * ***********************************************/
-  this.fire = function(enemy) { 
-    //Need to calculate the distance between enemy and tower and then animate
-    var laser1 = new laser();
-    
-    //while (enemy.health > 0) {
-      laser1.updateLaser((this.x * 2.5), (this.y * 2.5), enemy.x, enemy.y);
-      laser1.draw(this.rof);
-   // }
+  this.drawLaser = function() {
+    ctx.beginPath();
+	  ctx.moveTo(this.centerX, this.centerY);
+	  ctx.lineTo(this.target.x, this.target.y);
+	  ctx.strokeStyle = "red";
+	  ctx.lineWidth = 1;
+	  ctx.stroke();
+	  
   };
   
  
@@ -105,10 +106,6 @@ function tower(x,y) {
    * Attacks a unit that is the towers target
    * ***********************************************/
   this.shoot = function(){
-    
-    //call fire animation
-    //this.fire();
-    
     //do damage to unit
     this.target.health = this.target.health - this.damage;
     
@@ -178,26 +175,3 @@ var removeTowers = function() {
      }
 };
 
-/********************************************
- * Laser class for creating pew pew graphics
- * *****************************************/
- function laser() {
-   this.x1 = 0;
-   this.y1 = 0;
-   this.x2 = 0;
-   this.y2 = 0;
-   
-   this.updateLaser = function(x1, y1, x2, y2) {
-     this.x1 = x1;
-     this.y1 = y1;
-     this.x2 = x2;
-     this.y2 = y2;
-   };
-   
-   this.draw = function(speed) {
-     ctx.strokeStyle = "red";
-     ctx.moveTo(this.x1, this.y1);
-     ctx.lineTo(this.x1 + (this.x2 - this.x1) * speed, this.y1 + (this.y2 - this.y1) * speed);
-     ctx.stroke();
-   };
- }

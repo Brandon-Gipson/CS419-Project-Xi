@@ -69,8 +69,8 @@ unit.prototype.draw = function() {
     
     // Health bar outline
     ctx.lineWidth = '1';
-    ctx.strokeRect(Hx, Hy, Hw, Hh);
     ctx.strokeStyle = 'black';
+    ctx.strokeRect(Hx, Hy, Hw, Hh);
 }
 
 /*********************** Unit Utility Functions *****************************/

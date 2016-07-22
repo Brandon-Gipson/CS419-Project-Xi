@@ -9,7 +9,7 @@
   var mouseY = 0;
 	 var towerHit = false;
 	 var buttonHit = false;
-		
+	 
  	//getting mouse position and offsets it by canvas boundry
  	var bRect = game_field.getBoundingClientRect(); //get the boundary of the canvas
   mouseX = event.clientX - bRect.left;
@@ -18,8 +18,8 @@
   //check to see if mouse click is on the new tower button
   if((newTowerButton.x <= mouseX) && (newTowerButton.x + newTowerButton.width >= mouseX) && (newTowerButton.y <= mouseY) && (newTowerButton.y + newTowerButton.height >= mouseY)){
    newTowerButton.press = true; //marks bottom as pressed
+ 
    return;
-   
   }
   
     

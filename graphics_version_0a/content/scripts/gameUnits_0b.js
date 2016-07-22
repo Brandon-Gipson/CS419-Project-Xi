@@ -17,11 +17,17 @@ function unit() {
     this.width = 20;
     
     // Unit health
-    this.health = 10;
     this.maxhealth = 10;
+    this.health = 10;
 }
 
 /************************** Unit Superclass Methods *************************/
+/* Set Health Function */
+unit.prototype.setFullHealth = function(hp) {
+    this.maxhealth = hp;
+    this.health = hp;
+}
+
 /* Movement Function */
 unit.prototype.move = function() {
     ManhattanPath(this);  // Use Manhattan Pathing Algorithm
@@ -65,6 +71,7 @@ unit.prototype.draw = function() {
     ctx.lineWidth = '1';
     ctx.strokeStyle = 'black';
     ctx.strokeRect(Hx, Hy, Hw, Hh);
+    
 }
 
 /*********************** Unit Utility Functions *****************************/
@@ -99,7 +106,9 @@ function redBlock() {
     unit.call(this);  // Call unit superclass constructor
     // Set Red Block Parameters
     this.color = 'red';
-    this.health = 1;
+    this.setFullHealth(50);
+    this.height = 25;
+    this.width = 25;
     this.speed = 0.8
 }
 redBlock.prototype = Object.create(unit.prototype);
@@ -109,8 +118,10 @@ function greenBlock() {
     unit.call(this);  // Call unit superclass constructor
     // Set Green Block Parameters
     this.color = 'green';
+    this.setFullHealth(15);
+    this.height = 15
+    this.width = 15;
     this.speed = 2;
-    this.health = 10;
 }
 greenBlock.prototype = Object.create(unit.prototype);
 
@@ -119,7 +130,8 @@ function blueBlock() {
     unit.call(this);  // Call unit superclass constructor
     // Set Blue Block Parameters
     this.color = 'blue';
-    this.health = 4;
+    this.setFullHealth(30);
+    this.speed = 1;
 }
 blueBlock.prototype = Object.create(unit.prototype);
 

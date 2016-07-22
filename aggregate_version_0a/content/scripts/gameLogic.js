@@ -23,6 +23,13 @@ var renderLoop = function() {
     // Draw Towers
     for (var i = 0; i < towerList.length; i++) {
         towerList[i].draw();
+        // Fire Laser!
+        if (towerList[i].target != null) {
+            towerList[i].drawLaser();
+        }
+    }
+    if(newTowerButton.press) {
+        newTowerButton.drawOutline();
     }
     requestAnimationFrame(renderLoop);  // Loop graphics rendering
 };

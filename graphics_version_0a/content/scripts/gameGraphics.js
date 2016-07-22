@@ -117,6 +117,12 @@ var newTowerButton = {
   x: 30,
   y: 575,
   
+  drawOutline: function() {
+    ctx.lineWidth = '1';
+    ctx.strokeStyle = 'black';
+    ctx.strokeRect(this.x, this.y, this.width, this.height);
+  },
+  
   draw: function() {
     ctx.fillStyle="gray";
     ctx.fillRect(this.x, this.y, this.height, this.width);
