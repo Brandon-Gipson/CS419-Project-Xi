@@ -1,4 +1,16 @@
-/* Main game logic file */
+/*****************************************************************************
+*			         CS 419 - Software Projects
+*				 Oregon State University - Summer 2016
+*     	           WEB 1: Real-Time Strategy Game
+*
+* Project Team: Xi
+* Members: Brandon Gipson, Tom Dale, James Pool
+*
+* Filename: gameLogic.js
+* Version: -
+* Description: Tower defense game logic loops
+*
+*****************************************************************************/
 
 var game_field = document.getElementById('game_field');
 var ctx = game_field.getContext('2d');
@@ -66,7 +78,7 @@ window.onload = function() {
     loadPath();
     hearts.updateCurrent(5);
     hearts.updateMax(5);
-    coins.update(1000);
+    coins.update(200);
     // Debug waypoint list
     //console.log("Waypoint Lenght: " + waypointList.length);
     //for (var i = 0; i < waypointList.length; i++) {

@@ -1,4 +1,16 @@
-"use strict"
+/*****************************************************************************
+*			         CS 419 - Software Projects
+*				 Oregon State University - Summer 2016
+*     	           WEB 1: Real-Time Strategy Game
+*
+* Project Team: Xi
+* Members: Brandon Gipson, Tom Dale, James Pool
+*
+* Filename: gameUnits.js
+* Version: 0b
+* Description: Tower defense unit class and associated functions
+*
+*****************************************************************************/
 
 /* List for current units in game */
 var unitList = [];
@@ -10,6 +22,8 @@ function unit() {
     this.y = 0;  // top point
     this.speed = 1;  // Unit movement speed [pixels per frame]
     this.waypoint = 1;  // Waypoint 0 is starting location
+    this.escape = false;  // Set to true if unit escapes
+    this.value = 1;
     
     // Visual properties
     this.color = 'gray';
@@ -26,14 +40,14 @@ function unit() {
 unit.prototype.setFullHealth = function(hp) {
     this.maxhealth = hp;
     this.health = hp;
-}
+};
 
-/* Movement Function */
+/* Logic Function: Calculate unit movement */
 unit.prototype.move = function() {
     ManhattanPath(this);  // Use Manhattan Pathing Algorithm
-}
+};
 
-/* Rendering Function */
+/* Rendering Function: Draws the unit with a health bar */
 unit.prototype.draw = function() {
     // Calculate unit top-left point
     var Px = this.x - this.width/2;
@@ -48,7 +62,7 @@ unit.prototype.draw = function() {
     var Hx = Px + 1;  // Health bar left edge
     var Hy = Py + this.width / 3;  // Health bar upper edge
     var Hw = this.width - 2;  // Health bar width
-    var Hh = this.height / 3  // Health bar height
+    var Hh = this.height / 3;  // Health bar height
     var Hp = this.health / this.maxhealth;  // Health percentage
     
     // Health bar background
@@ -71,8 +85,7 @@ unit.prototype.draw = function() {
     ctx.lineWidth = '1';
     ctx.strokeStyle = 'black';
     ctx.strokeRect(Hx, Hy, Hw, Hh);
-    
-}
+};
 
 /*********************** Unit Utility Functions *****************************/
 var addUnit = function() {
@@ -91,8 +104,13 @@ var addUnit = function() {
 var removeDead = function() {
     // Remove units from end to beginning
     for (var i = unitList.length - 1; i >= 0; i--) {
-        if (unitList[i].health <= 0) {  // Unit is dead, remove it
-            unitList.splice(i,1);
+        if (unitList[i].escape) {  // Unit escapes
+            hearts.current -= 1;  // Remove a heart
+            unitList.splice(i,1);  // Remove unit
+        }
+        else if (unitList[i].health <= 0) {  // Unit is killed
+            coins.amount += unitList[i].value;
+            unitList.splice(i,1);  // Remove unit
         }
     }
 };
@@ -109,7 +127,8 @@ function redBlock() {
     this.setFullHealth(50);
     this.height = 25;
     this.width = 25;
-    this.speed = 0.8
+    this.speed = 0.8;
+    this.value = 5;
 }
 redBlock.prototype = Object.create(unit.prototype);
 
@@ -119,9 +138,10 @@ function greenBlock() {
     // Set Green Block Parameters
     this.color = 'green';
     this.setFullHealth(15);
-    this.height = 15
+    this.height = 15;
     this.width = 15;
     this.speed = 2;
+    this.value = 1;
 }
 greenBlock.prototype = Object.create(unit.prototype);
 
@@ -132,6 +152,7 @@ function blueBlock() {
     this.color = 'blue';
     this.setFullHealth(30);
     this.speed = 1;
+    this.value = 2;
 }
 blueBlock.prototype = Object.create(unit.prototype);
 

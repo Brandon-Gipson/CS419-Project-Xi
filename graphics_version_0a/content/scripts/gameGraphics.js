@@ -1,3 +1,17 @@
+/*****************************************************************************
+*			         CS 419 - Software Projects
+*				 Oregon State University - Summer 2016
+*     	           WEB 1: Real-Time Strategy Game
+*
+* Project Team: Xi
+* Members: Brandon Gipson, Tom Dale, James Pool
+*
+* Filename: gameGraphics.js
+* Version: -
+* Description: Tower defense graphics: hearts and coins
+*
+*****************************************************************************/
+
 /***********************************
  * Hearts object for life tracking 
  * *********************************/

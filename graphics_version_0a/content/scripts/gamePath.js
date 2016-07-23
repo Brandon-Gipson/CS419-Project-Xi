@@ -1,3 +1,17 @@
+/*****************************************************************************
+*			         CS 419 - Software Projects
+*				 Oregon State University - Summer 2016
+*     	           WEB 1: Real-Time Strategy Game
+*
+* Project Team: Xi
+* Members: Brandon Gipson, Tom Dale, James Pool
+*
+* Filename: gamePath.js
+* Version: -
+* Description: Tower defense game path logic
+*
+*****************************************************************************/
+
 // Array storing function from: 
 // http://stackoverflow.com/questions/7030229/storing-coordinates-in-array-in-javascript
 
@@ -37,7 +51,7 @@ function ManhattanPath(u) {
         //console.log("Next waypoint ... ");
         u.waypoint++;  // Move to next waypoint
         if (u.waypoint == waypointList.length) { // Check if unit reached end
-            u.health = -1;  //Kill Unit (Temporary)
+            u.escape = true;
             return;
         }
     }

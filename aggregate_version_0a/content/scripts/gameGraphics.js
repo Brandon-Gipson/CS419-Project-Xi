@@ -146,4 +146,96 @@ var newTowerButton = {
     ctx.textBaseline = "top";
     ctx.fillText("T", 33, 575);
   }
-}
+};
+
+/***************************************
+ * An object that contains coordinates
+ * for the game map's boundaries for the
+ * purpose of tower placing retrictions
+ * **************************************/
+var mapBoundaryList = [
+ 
+ upperLeftSec = {
+     x: 0,
+     y: 0,
+     width: 180,
+     height: 380
+   },
+   
+  upperMidSec = {
+    x: 180,
+    y: 0,
+    width: 770,
+    height: 80
+  },
+  
+  upperRightSec = {
+    x: 1090,
+    y: 0,
+    width: 170,
+    height: 380
+  },
+   
+  bottomLeftSec = {
+    x: 0,
+    y: 610,
+    width: 330,
+    height: 80
+  },
+   
+  // bottomMidSec = {
+  //   x: 340,
+  //   y: 580,
+  //   width: 200,
+  //   height: 380
+  // },
+   
+  bottomRightSec = {
+    x: 1100,
+    y: 580,
+    width: 330,
+    height: 80
+  },
+];
+
+/**************************************
+ * An object that contains coordinates
+ * for the game map's boundaries for the
+ * purpose of tower placing retrictions
+ * **************************************/
+var pathBoundaryList = [
+  pathPart1 = {
+    x: 0,
+    y: 420,
+    width: 290,
+    height: 7
+  },
+  
+  pathPart2 = {
+    x: 1100,
+    y: 580,
+    width: 330,
+    height: 80
+  },
+  
+  pathPart3 = {
+    x: 220,
+    y: 130,
+    width: 770,
+    height: 7
+  },
+  
+  pathPart4 = {
+    x: 1100,
+    y: 580,
+    width: 330,
+    height: 80
+  },
+  
+  pathPart5 = {
+    x: 1100,
+    y: 580,
+    width: 290,
+    height: 7
+  }
+];
