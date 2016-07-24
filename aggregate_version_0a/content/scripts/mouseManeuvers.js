@@ -23,7 +23,9 @@
   var mouseY = 0;
 	 var towerHit = false;
 	 var buttonHit = false;
-		
+	 var mapHit = false;
+	 var pathHit = false;
+	 
  	//getting mouse position and offsets it by canvas boundry
  	var bRect = game_field.getBoundingClientRect(); //get the boundary of the canvas
   mouseX = event.clientX - bRect.left;
@@ -32,8 +34,8 @@
   //check to see if mouse click is on the new tower button
   if((newTowerButton.x <= mouseX) && (newTowerButton.x + newTowerButton.width >= mouseX) && (newTowerButton.y <= mouseY) && (newTowerButton.y + newTowerButton.height >= mouseY)){
    newTowerButton.press = true; //marks bottom as pressed
+ 
    return;
-   
   }
   
     
@@ -44,17 +46,37 @@
     if (towerHit) {
      break;
     }
-    buttonHit = hitTest(newTowerButton, mouseX, mouseY);
+    
+    
    }
+   
+   buttonHit = hitTest(newTowerButton, mouseX, mouseY);
+   
+   for(i in mapBoundaryList) {
+    mapHit = boundsHitTest(mapBoundaryList[i], mouseX, mouseY);
+    if (mapHit) {
+     break;
+    }
+   }
+   
+   for(i in pathBoundaryList) {
+    pathHit = boundsHitTest(pathBoundaryList[i], mouseX, mouseY);
+    if (pathHit) {
+     break;
+    }
+   }
+    
+  }
+   
  	
   	//if the click was not within an existing tower then it places the tower
   	// and if the button for tower placement has been pressed
-  	if (!towerHit && !buttonHit) {
+  	if (!towerHit && !buttonHit && !mapHit && !pathHit && newTowerButton.press) {
   	    placeTower(mouseX-5, mouseY-5); //We can edit this to snap more to the grid
   	                                   //Though I haven't though about how yet
   	    newTowerButton.press = false;
   	}
-  }
+  
  	
  	
  	
@@ -96,3 +118,35 @@
      return  false;
   }
   
+  
+/**************************************************************
+ * Test to see if the mouse x, y fall inside or overlapping the
+ * area we consider to be out of bounds for tower placement.
+ * This is very similar to the function above but had to account
+ * for the fact that we are checking the tower's width and height
+ * against the boundary and not the obj (the boundary)
+ * **************************************************************/
+  function boundsHitTest(obj,mx,my) {
+   
+   if ((obj.x <= mx) && (obj.x + obj.width >= mx) && (obj.y <= my) && (obj.y + obj.height >= my)) { //top left corner
+    return true;
+    
+   }
+   
+   if ((obj.x <= mx + 40) && (obj.x + obj.width >= mx + 40) && (obj.y <= my) && (obj.y + obj.height >= my)) { //top right corner
+    return true;
+    
+   }
+
+   if ((obj.x <= mx) && (obj.x + obj.width >= mx) && (obj.y <= my + 40) && (obj.y + obj.height >= my + 40)) { //bottom left corner
+    return true;
+   }
+   
+   if ((obj.x <= mx + 40) && (obj.x + obj.width >= mx + 40) && (obj.y <= my + 40) && (obj.y + obj.height >= my + 40)) { //bottom right corner
+    return true;
+   }
+   
+   return  false;
+  }
+
+

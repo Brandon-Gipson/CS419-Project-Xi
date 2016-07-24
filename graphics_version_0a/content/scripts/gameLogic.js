@@ -40,6 +40,19 @@ var renderLoop = function() {
             towerList[i].drawLaser();
         }
     }
+    
+    //Makes boundaries visible in red
+    // for (i in mapBoundaryList) {
+    //     ctx.fillStyle = "red";
+    //     ctx.fillRect(mapBoundaryList[i].x, mapBoundaryList[i].y, mapBoundaryList[i].width, mapBoundaryList[i].height);
+    // }
+    
+    //Makes path boundaries visible in red
+    // for (i in pathBoundaryList) {
+    //     ctx.fillStyle = "red";
+    //     ctx.fillRect(pathBoundaryList[i].x, pathBoundaryList[i].y, pathBoundaryList[i].width, pathBoundaryList[i].height);
+    // }
+    
     if(newTowerButton.press) {
         newTowerButton.drawOutline();
     }

@@ -155,46 +155,46 @@ var newTowerButton = {
  * **************************************/
 var mapBoundaryList = [
  
- upperLeftSec = {
-     x: 0,
-     y: 0,
-     width: 180,
-     height: 380
-   },
+upperLeftSec = {
+    x: 0,
+    y: 0,
+    width: 160,
+    height: 360
+  },
    
   upperMidSec = {
-    x: 180,
+    x: 160,
     y: 0,
-    width: 770,
-    height: 80
+    width: 810,
+    height: 60
   },
   
   upperRightSec = {
-    x: 1090,
+    x: 970,
     y: 0,
-    width: 170,
-    height: 380
+    width: 150,
+    height: 360
   },
    
   bottomLeftSec = {
     x: 0,
-    y: 610,
-    width: 330,
-    height: 80
+    y: 550,
+    width: 350,
+    height: 60
   },
    
-  // bottomMidSec = {
-  //   x: 340,
-  //   y: 580,
-  //   width: 200,
-  //   height: 380
-  // },
+  bottomMidSec = {
+    x: 350,
+    y: 250,
+    width: 430,
+    height: 360
+  },
    
   bottomRightSec = {
-    x: 1100,
-    y: 580,
-    width: 330,
-    height: 80
+    x: 780,
+    y: 550,
+    width: 350,
+    height: 60
   },
 ];
 
@@ -208,34 +208,34 @@ var pathBoundaryList = [
     x: 0,
     y: 420,
     width: 290,
-    height: 7
+    height: 70
   },
   
   pathPart2 = {
-    x: 1100,
-    y: 580,
-    width: 330,
-    height: 80
+    x: 220,
+    y: 120,
+    width: 70,
+    height: 300
   },
   
   pathPart3 = {
     x: 220,
-    y: 130,
-    width: 770,
-    height: 7
+    y: 120,
+    width: 690,
+    height: 70
   },
   
   pathPart4 = {
-    x: 1100,
-    y: 580,
-    width: 330,
-    height: 80
+    x: 840,
+    y: 120,
+    width: 70,
+    height: 300
   },
   
   pathPart5 = {
-    x: 1100,
-    y: 580,
-    width: 290,
-    height: 7
+    x: 840,
+    y: 420,
+    width: 270,
+    height: 70
   }
 ];

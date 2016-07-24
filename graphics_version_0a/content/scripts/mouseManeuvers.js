@@ -53,14 +53,14 @@
    buttonHit = hitTest(newTowerButton, mouseX, mouseY);
    
    for(i in mapBoundaryList) {
-    mapHit = hitTest(mapBoundaryList[i], mouseX, mouseY);
+    mapHit = boundsHitTest(mapBoundaryList[i], mouseX, mouseY);
     if (mapHit) {
      break;
     }
    }
    
    for(i in pathBoundaryList) {
-    pathHit = hitTest(pathBoundaryList[i], mouseX, mouseY);
+    pathHit = boundsHitTest(pathBoundaryList[i], mouseX, mouseY);
     if (pathHit) {
      break;
     }
@@ -118,3 +118,35 @@
      return  false;
   }
   
+  
+/**************************************************************
+ * Test to see if the mouse x, y fall inside or overlapping the
+ * area we consider to be out of bounds for tower placement.
+ * This is very similar to the function above but had to account
+ * for the fact that we are checking the tower's width and height
+ * against the boundary and not the obj (the boundary)
+ * **************************************************************/
+  function boundsHitTest(obj,mx,my) {
+   
+   if ((obj.x <= mx) && (obj.x + obj.width >= mx) && (obj.y <= my) && (obj.y + obj.height >= my)) { //top left corner
+    return true;
+    
+   }
+   
+   if ((obj.x <= mx + 40) && (obj.x + obj.width >= mx + 40) && (obj.y <= my) && (obj.y + obj.height >= my)) { //top right corner
+    return true;
+    
+   }
+
+   if ((obj.x <= mx) && (obj.x + obj.width >= mx) && (obj.y <= my + 40) && (obj.y + obj.height >= my + 40)) { //bottom left corner
+    return true;
+   }
+   
+   if ((obj.x <= mx + 40) && (obj.x + obj.width >= mx + 40) && (obj.y <= my + 40) && (obj.y + obj.height >= my + 40)) { //bottom right corner
+    return true;
+   }
+   
+   return  false;
+  }
+
+
