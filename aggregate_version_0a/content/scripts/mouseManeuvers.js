@@ -42,7 +42,7 @@
   if(newTowerButton.press) { //If the tower placement button was pressed then do:
   //checks towerList to see if click is inside existing tower
    for (var i in towerList) {
-    towerHit = hitTest(towerList[i], mouseX, mouseY);
+    towerHit = hitTest(towerList[i], 40, 40, mouseX, mouseY);
     if (towerHit) {
      break;
     }
@@ -50,17 +50,17 @@
     
    }
    
-   buttonHit = hitTest(newTowerButton, mouseX, mouseY);
+   buttonHit = hitTest(newTowerButton, 40, 40, mouseX, mouseY);
    
    for(i in mapBoundaryList) {
-    mapHit = boundsHitTest(mapBoundaryList[i], mouseX, mouseY);
+    mapHit = hitTest(mapBoundaryList[i], 40, 40, mouseX, mouseY);
     if (mapHit) {
      break;
     }
    }
    
    for(i in pathBoundaryList) {
-    pathHit = boundsHitTest(pathBoundaryList[i], mouseX, mouseY);
+    pathHit = hitTest(pathBoundaryList[i], 40, 40, mouseX, mouseY);
     if (pathHit) {
      break;
     }
@@ -76,9 +76,6 @@
   	                                   //Though I haven't though about how yet
   	    newTowerButton.press = false;
   	}
-  
- 	
- 	
  	
  	//prevents mouse click from effecting browser window
  	if (e.preventDefault) {
@@ -93,60 +90,31 @@
  
  
  /************************************************************
-  * Tests to see if the the Mouse X,Y fall in the area between
-  * the tower's corners. So its x, x+width, y, and y+height.
-  * Returns true if it does and false if it doesn't
+  * Tests to see if object 2 created at the mouse click's x, y
+  * overlaps object 1 in any way. The mouse click marks the top
+  * left corner of object 2. Returns true if it does and false 
+  * if it doesn't
   * **********************************************************/
-  function hitTest(obj,mx,my) {
-      
-      if ((obj.x <= mx + obj.width) && (obj.x + obj.width >= mx + obj.width) && (obj.y <= my + obj.height) && (obj.y + obj.height >= my + obj.height)) {
-        return true;  
-      }
-      
-      if ((obj.x <= mx + obj.width) && (obj.x + obj.width >= mx + obj.width) && (obj.y <= my) && (obj.y + obj.height >= my)) {
-          return true;
-      }
-      
-      if ((obj.x <= mx) && (obj.x + obj.width >= mx) && (obj.y <= my + obj.height) && (obj.y + obj.height >= my + obj.height)) {
-          return true;
-      }
-      
-      if ((obj.x <= mx) && (obj.x + obj.width >= mx) && (obj.y <= my) && (obj.y + obj.height >= my)) {
-          return true;
-      }
-      
-     return  false;
-  }
-  
-  
-/**************************************************************
- * Test to see if the mouse x, y fall inside or overlapping the
- * area we consider to be out of bounds for tower placement.
- * This is very similar to the function above but had to account
- * for the fact that we are checking the tower's width and height
- * against the boundary and not the obj (the boundary)
- * **************************************************************/
-  function boundsHitTest(obj,mx,my) {
+
+ function hitTest(obj, obj2Width, obj2Height, mx, my) {
    
    if ((obj.x <= mx) && (obj.x + obj.width >= mx) && (obj.y <= my) && (obj.y + obj.height >= my)) { //top left corner
     return true;
     
    }
    
-   if ((obj.x <= mx + 40) && (obj.x + obj.width >= mx + 40) && (obj.y <= my) && (obj.y + obj.height >= my)) { //top right corner
+   if ((obj.x <= mx + obj2Width) && (obj.x + obj.width >= mx + obj2Width) && (obj.y <= my) && (obj.y + obj.height >= my)) { //top right corner
     return true;
     
    }
 
-   if ((obj.x <= mx) && (obj.x + obj.width >= mx) && (obj.y <= my + 40) && (obj.y + obj.height >= my + 40)) { //bottom left corner
+   if ((obj.x <= mx) && (obj.x + obj.width >= mx) && (obj.y <= my + obj2Height) && (obj.y + obj.height >= my + obj2Height)) { //bottom left corner
     return true;
    }
    
-   if ((obj.x <= mx + 40) && (obj.x + obj.width >= mx + 40) && (obj.y <= my + 40) && (obj.y + obj.height >= my + 40)) { //bottom right corner
+   if ((obj.x <= mx + obj2Width) && (obj.x + obj.width >= mx + obj2Width) && (obj.y <= my + obj2Height) && (obj.y + obj.height >= my + obj2Height)) { //bottom right corner
     return true;
    }
    
    return  false;
   }
-
-
