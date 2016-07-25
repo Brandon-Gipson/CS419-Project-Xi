@@ -7,7 +7,7 @@
 * Members: Brandon Gipson, Tom Dale, James Pool
 *
 * Filename: gameUnits.js
-* Version: 0b
+* Version: 0c
 * Description: Tower defense unit class and associated functions
 *
 *****************************************************************************/
@@ -33,6 +33,11 @@ function unit() {
     // Unit health
     this.maxhealth = 10;
     this.health = 10;
+    
+    // Color points (similar to tower gems)
+    this.red = 0;
+    this.green = 0;
+    this.blue = 0;
 }
 
 /************************** Unit Superclass Methods *************************/
@@ -57,6 +62,11 @@ unit.prototype.draw = function() {
     ctx.beginPath();
     ctx.fillStyle = this.color;
     ctx.fillRect(Px, Py, this.width, this.height);
+    
+    // Unit outline
+    ctx.lineWidth = '1';
+    ctx.strokeStyle = 'black';
+    ctx.strokeRect(Px, Py, this.width, this.height);
     
     //--- Draw health bar ---
     var Hx = Px + 1;  // Health bar left edge
@@ -90,10 +100,13 @@ unit.prototype.draw = function() {
 /*********************** Unit Utility Functions *****************************/
 var addUnit = function() {
     // Randomly select a new unit from availible units
-    var newUnit;
-    var newUnitType = Math.floor(Math.random() * unitTypeList.length);
-    newUnit = new unitTypeList[newUnitType]();
+    //var newUnit;
+    //var newUnitType = Math.floor(Math.random() * unitTypeList.length);
+    //newUnit = new unitTypeList[newUnitType]();
     
+    var newUnit = new colorBlock(gRed,gGreen,gBlue);
+    incrementColor();
+
     // Set initial waypoint
     newUnit.x = waypointList[0].x;
     newUnit.y = waypointList[0].y;
@@ -156,6 +169,41 @@ function blueBlock() {
 }
 blueBlock.prototype = Object.create(unit.prototype);
 
+/* Color Block Unit */
+var gRed = 0;
+var gGreen = 0;
+var gBlue =0;
+function incrementColor() {
+    gRed++;
+    if (gRed > maxPoints) {
+        gRed = 0;
+        gGreen++;
+        if (gGreen > maxPoints) {
+            gGreen = 0;
+            gBlue++;
+            if (gBlue > maxPoints) {
+                gBlue = 0;
+            }
+        }
+    }
+}
 
-
-
+function colorBlock(R,G,B) {
+    unit.call(this);  // Call unit superclass constructor
+    // Set Color Block Parameters
+    this.color = getColor(R,G,B);
+    this.red = R;
+    this.green = G;
+    this.blue = B;
+    
+    // Set block parameters
+    var HEALTH_FACTOR = [15, 30, 50, 100];
+    var SIZE_FACTOR = [0.8, 1, 1.2, 1.5];
+    var SPEED_FACTOR = [0.8, 1, 1.5, 2];
+    
+    this.speed = SPEED_FACTOR[G];
+    this.setFullHealth(HEALTH_FACTOR[R]);
+    this.height = 20 * SIZE_FACTOR[B];
+    this.width = this.height;
+}
+colorBlock.prototype = Object.create(unit.prototype);

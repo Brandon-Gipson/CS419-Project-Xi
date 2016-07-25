@@ -206,36 +206,36 @@ upperLeftSec = {
 var pathBoundaryList = [
   pathPart1 = {
     x: 0,
-    y: 420,
+    y: 427,
     width: 290,
-    height: 70
+    height: 65
   },
   
   pathPart2 = {
-    x: 220,
-    y: 120,
-    width: 70,
+    x: 230,
+    y: 127,
+    width: 62.5,
     height: 300
   },
   
   pathPart3 = {
     x: 220,
-    y: 120,
+    y: 127,
     width: 690,
-    height: 70
+    height: 65
   },
   
   pathPart4 = {
-    x: 840,
-    y: 120,
-    width: 70,
+    x: 850,
+    y: 127,
+    width: 62.5,
     height: 300
   },
   
   pathPart5 = {
     x: 840,
-    y: 420,
+    y: 427,
     width: 270,
-    height: 70
+    height: 65
   }
 ];

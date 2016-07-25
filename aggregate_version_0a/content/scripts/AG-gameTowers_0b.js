@@ -18,7 +18,7 @@ var towerList = [];
 /************************* Tower Superclass *********************************/
 function tower(x,y) {
     // Placement variables
-    this.x = x;  // left point
+    this.x = x; // left point
     this.y = y;  // top point
     this.cost = 1;
     
@@ -33,7 +33,8 @@ function tower(x,y) {
     this.laserColor = 'gray';
     this.laserWidth = 1;
     this.damage = 1;
-    this.rof = 0; 
+    this.fireRateMax = 3;      //value you trigger when tower shoots
+    this.fireRateCount = 0;    //counter used to know when to fire
     this.range = 100;
     this.removeTower = false;  // Set to true have tower removed
     this.target = null;
@@ -121,35 +122,47 @@ tower.prototype.shoot = function(){
     }
 };
   
-/* Logic Function: Target unit and attack if unit is in rage */
+/* Logic Function: Target unit and attack if unit is in range */
 tower.prototype.attack = function(unitList){
     var tower = this;
     //check range of current target first
-    if (tower.target != null) {
-        var distSq = Math.pow((tower.x - tower.target.x), 2) + Math.pow((tower.y - tower.target.y), 2);
-        //if not in range anymore remove target (range less than distance)
-        if (Math.pow(tower.range, 2) < distSq){
-            tower.target = null;
-        }
+    
+    //check if even fires based on rate of fire before runs any code
+    //if count less than max increment
+    if (tower.fireRateCount < tower.fireRateMax) {
+        tower.fireRateCount++;
     }
     
-    //if doesnt have a target find one
-    if (tower.target == null) {
-        for (var i = 0; i < unitList.length; i++){
-            //calculate distance from tower x.y to unit x.y
-            distSq = Math.pow((tower.x - unitList[i].x), 2) + Math.pow((tower.y - unitList[i].y), 2);
-            //check if within tower range
-            if (Math.pow(tower.range, 2) > distSq){
-                //set the unit as the towers target
-                tower.target = unitList[i];
-                break;
+    //check if in range then shoot
+    else {
+    
+        if (tower.target != null) {
+            var distSq = Math.pow((tower.x - tower.target.x), 2) + Math.pow((tower.y - tower.target.y), 2);
+            //if not in range anymore remove target (range less than distance)
+            if (Math.pow(tower.range, 2) < distSq){
+                tower.target = null;
             }
         }
-    }
-    
-    //if the unit was in range, or found a new target shoot
-    if (tower.target != null){
-        tower.shoot();
+        
+        //if doesnt have a target find one
+        if (tower.target == null) {
+            for (var i = 0; i < unitList.length; i++){
+                //calculate distance from tower x.y to unit x.y
+                distSq = Math.pow((tower.x - unitList[i].x), 2) + Math.pow((tower.y - unitList[i].y), 2);
+                //check if within tower range
+                if (Math.pow(tower.range, 2) > distSq){
+                    //set the unit as the towers target
+                    tower.target = unitList[i];
+                    break;
+                }
+            }
+        }
+        
+        //if the unit was in range, or found a new target shoot
+        if (tower.target != null){
+            tower.fireRateCount = 0;
+            tower.shoot();
+        }
     }
 };
 

@@ -43,6 +43,19 @@ var renderLoop = function() {
     if(newTowerButton.press) {
         newTowerButton.drawOutline();
     }
+    
+    //Makes boundaries visible in red
+    // for (i in mapBoundaryList) {
+    //     ctx.fillStyle = "red";
+    //     ctx.fillRect(mapBoundaryList[i].x, mapBoundaryList[i].y, mapBoundaryList[i].width, mapBoundaryList[i].height);
+    // }
+    
+    //Makes path boundaries visible in red
+    // for (i in pathBoundaryList) {
+    //     ctx.fillStyle = "red";
+    //     ctx.fillRect(pathBoundaryList[i].x, pathBoundaryList[i].y, pathBoundaryList[i].width, pathBoundaryList[i].height);
+    // }
+    
     requestAnimationFrame(renderLoop);  // Loop graphics rendering
 };
 
@@ -76,9 +89,7 @@ var logicLoop = function() {
 
 window.onload = function() {
     loadPath();
-    hearts.updateCurrent(5);
-    hearts.updateMax(5);
-    coins.update(200);
+    loadPlayer();
     // Debug waypoint list
     //console.log("Waypoint Lenght: " + waypointList.length);
     //for (var i = 0; i < waypointList.length; i++) {

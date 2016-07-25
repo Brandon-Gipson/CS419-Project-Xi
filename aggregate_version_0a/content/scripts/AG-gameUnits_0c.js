@@ -1,4 +1,16 @@
-"use strict"
+/*****************************************************************************
+*			         CS 419 - Software Projects
+*				 Oregon State University - Summer 2016
+*     	           WEB 1: Real-Time Strategy Game
+*
+* Project Team: Xi
+* Members: Brandon Gipson, Tom Dale, James Pool
+*
+* Filename: gameUnits.js
+* Version: 0c
+* Description: Tower defense unit class and associated functions
+*
+*****************************************************************************/
 
 /* List for current units in game */
 var unitList = [];
@@ -10,6 +22,8 @@ function unit() {
     this.y = 0;  // top point
     this.speed = 1;  // Unit movement speed [pixels per frame]
     this.waypoint = 1;  // Waypoint 0 is starting location
+    this.escape = false;  // Set to true if unit escapes
+    this.value = 1;
     
     // Visual properties
     this.color = 'gray';
@@ -17,17 +31,28 @@ function unit() {
     this.width = 20;
     
     // Unit health
-    this.health = 10;
     this.maxhealth = 10;
+    this.health = 10;
+    
+    // Color points (similar to tower gems)
+    this.red = 0;
+    this.green = 0;
+    this.blue = 0;
 }
 
 /************************** Unit Superclass Methods *************************/
-/* Movement Function */
+/* Set Health Function */
+unit.prototype.setFullHealth = function(hp) {
+    this.maxhealth = hp;
+    this.health = hp;
+};
+
+/* Logic Function: Calculate unit movement */
 unit.prototype.move = function() {
     ManhattanPath(this);  // Use Manhattan Pathing Algorithm
-}
+};
 
-/* Rendering Function */
+/* Rendering Function: Draws the unit with a health bar */
 unit.prototype.draw = function() {
     // Calculate unit top-left point
     var Px = this.x - this.width/2;
@@ -38,11 +63,16 @@ unit.prototype.draw = function() {
     ctx.fillStyle = this.color;
     ctx.fillRect(Px, Py, this.width, this.height);
     
+    // Unit outline
+    ctx.lineWidth = '1';
+    ctx.strokeStyle = 'black';
+    ctx.strokeRect(Px, Py, this.width, this.height);
+    
     //--- Draw health bar ---
     var Hx = Px + 1;  // Health bar left edge
     var Hy = Py + this.width / 3;  // Health bar upper edge
     var Hw = this.width - 2;  // Health bar width
-    var Hh = this.height / 3  // Health bar height
+    var Hh = this.height / 3;  // Health bar height
     var Hp = this.health / this.maxhealth;  // Health percentage
     
     // Health bar background
@@ -65,15 +95,18 @@ unit.prototype.draw = function() {
     ctx.lineWidth = '1';
     ctx.strokeStyle = 'black';
     ctx.strokeRect(Hx, Hy, Hw, Hh);
-}
+};
 
 /*********************** Unit Utility Functions *****************************/
 var addUnit = function() {
     // Randomly select a new unit from availible units
-    var newUnit;
-    var newUnitType = Math.floor(Math.random() * unitTypeList.length);
-    newUnit = new unitTypeList[newUnitType]();
+    //var newUnit;
+    //var newUnitType = Math.floor(Math.random() * unitTypeList.length);
+    //newUnit = new unitTypeList[newUnitType]();
     
+    var newUnit = new colorBlock(gRed,gGreen,gBlue);
+    incrementColor();
+
     // Set initial waypoint
     newUnit.x = waypointList[0].x;
     newUnit.y = waypointList[0].y;
@@ -84,8 +117,13 @@ var addUnit = function() {
 var removeDead = function() {
     // Remove units from end to beginning
     for (var i = unitList.length - 1; i >= 0; i--) {
-        if (unitList[i].health <= 0) {  // Unit is dead, remove it
-            unitList.splice(i,1);
+        if (unitList[i].escape) {  // Unit escapes
+            hearts.current -= 1;  // Remove a heart
+            unitList.splice(i,1);  // Remove unit
+        }
+        else if (unitList[i].health <= 0) {  // Unit is killed
+            coins.amount += unitList[i].value;
+            unitList.splice(i,1);  // Remove unit
         }
     }
 };
@@ -99,8 +137,11 @@ function redBlock() {
     unit.call(this);  // Call unit superclass constructor
     // Set Red Block Parameters
     this.color = 'red';
-    this.health = 1;
-    this.speed = 0.8
+    this.setFullHealth(50);
+    this.height = 25;
+    this.width = 25;
+    this.speed = 0.8;
+    this.value = 5;
 }
 redBlock.prototype = Object.create(unit.prototype);
 
@@ -109,8 +150,11 @@ function greenBlock() {
     unit.call(this);  // Call unit superclass constructor
     // Set Green Block Parameters
     this.color = 'green';
+    this.setFullHealth(15);
+    this.height = 15;
+    this.width = 15;
     this.speed = 2;
-    this.health = 10;
+    this.value = 1;
 }
 greenBlock.prototype = Object.create(unit.prototype);
 
@@ -119,10 +163,47 @@ function blueBlock() {
     unit.call(this);  // Call unit superclass constructor
     // Set Blue Block Parameters
     this.color = 'blue';
-    this.health = 4;
+    this.setFullHealth(30);
+    this.speed = 1;
+    this.value = 2;
 }
 blueBlock.prototype = Object.create(unit.prototype);
 
+/* Color Block Unit */
+var gRed = 0;
+var gGreen = 0;
+var gBlue =0;
+function incrementColor() {
+    gRed++;
+    if (gRed > maxPoints) {
+        gRed = 0;
+        gGreen++;
+        if (gGreen > maxPoints) {
+            gGreen = 0;
+            gBlue++;
+            if (gBlue > maxPoints) {
+                gBlue = 0;
+            }
+        }
+    }
+}
 
-
-
+function colorBlock(R,G,B) {
+    unit.call(this);  // Call unit superclass constructor
+    // Set Color Block Parameters
+    this.color = getColor(R,G,B);
+    this.red = R;
+    this.green = G;
+    this.blue = B;
+    
+    // Set block parameters
+    var HEALTH_FACTOR = [15, 30, 50, 100];
+    var SIZE_FACTOR = [0.8, 1, 1.2, 1.5];
+    var SPEED_FACTOR = [0.8, 1, 1.5, 2];
+    
+    this.speed = SPEED_FACTOR[G];
+    this.setFullHealth(HEALTH_FACTOR[R]);
+    this.height = 20 * SIZE_FACTOR[B];
+    this.width = this.height;
+}
+colorBlock.prototype = Object.create(unit.prototype);

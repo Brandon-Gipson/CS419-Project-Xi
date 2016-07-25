@@ -1,4 +1,16 @@
-"use strict"
+/*****************************************************************************
+*			         CS 419 - Software Projects
+*				 Oregon State University - Summer 2016
+*     	           WEB 1: Real-Time Strategy Game
+*
+* Project Team: Xi
+* Members: Brandon Gipson, Tom Dale, James Pool
+*
+* Filename: gamePath.js
+* Version: -
+* Description: Tower defense game path logic
+*
+*****************************************************************************/
 
 // Array storing function from: 
 // http://stackoverflow.com/questions/7030229/storing-coordinates-in-array-in-javascript
@@ -11,11 +23,13 @@ function addWaypoint(xVal, yVal ,array) {
 }
 
 function loadPath() {
-    addWaypoint(0, 100, waypointList);  // Starting Location
-    addWaypoint(50, 100, waypointList);
-    addWaypoint(50, 150, waypointList);
-    addWaypoint(25, 150, waypointList);
-    addWaypoint(25, 25, waypointList);  // End Point
+    // Path points for 'DefaultBackground.png'
+    addWaypoint(0, 455, waypointList);  // Starting Location
+    addWaypoint(255, 455, waypointList);
+    addWaypoint(255, 155, waypointList);
+    addWaypoint(875, 155, waypointList);
+    addWaypoint(875, 455, waypointList);
+    addWaypoint(1120, 455, waypointList);  // End Point
 };
 
 // Manhattan Path Algorithm - Pauses at waypoint if would pass
@@ -29,15 +43,15 @@ function ManhattanPath(u) {
     var yDir = (yWay - u.y) > 0 ? 1 : -1;
     
     // Debug Lines
-    console.log("Waypoint " + u.waypoint + ": (" + xWay + ", " + yWay + ") - Unit: (" + u.x + ", " + u.y + ")");
-    console.log("Distance: (" + xDist + ", " + yDist + ") - Direction: (" + xDir + ", " + yDir + ")");
+    //console.log("Waypoint " + u.waypoint + ": (" + xWay + ", " + yWay + ") - Unit: (" + u.x + ", " + u.y + ")");
+    //console.log("Distance: (" + xDist + ", " + yDist + ") - Direction: (" + xDir + ", " + yDir + ")");
     
     // Check if waypoint is reached
     if ((xDist <= 0) && (yDist <= 0)) {
-        console.log("Next waypoint ... ");
+        //console.log("Next waypoint ... ");
         u.waypoint++;  // Move to next waypoint
         if (u.waypoint == waypointList.length) { // Check if unit reached end
-            u.health = -1;  //Kill Unit (Temporary)
+            u.escape = true;
             return;
         }
     }
