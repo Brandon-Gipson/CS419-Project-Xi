@@ -39,16 +39,23 @@
   var mxOffset = mouseX - 18.5;
 	 var myOffset = mouseY - 18.5;
   
+  //Checks to see if a tower has been clicked
+   if(!newTowerButton.press) {
+    for (i in towerList) {
+     towerList[i].clicked = (clickTest(towerList[i], mouseX, mouseY));
+    }
+   }
+  
   //check to see if mouse click is on the new tower button
-  if((newTowerButton.x <= mouseX) && (newTowerButton.x + newTowerButton.width >= mouseX) && (newTowerButton.y <= mouseY) && (newTowerButton.y + newTowerButton.height >= mouseY)){
+  if(clickTest(newTowerButton, mouseX, mouseY)){
    newTowerButton.press = true; //marks bottom as pressed
  
    return;
   }
   
-    
+  //Checks to see if the newTowerButton has been clicked  
   if(newTowerButton.press) { //If the tower placement button was pressed then do:
-  //checks towerList to see if click is inside existing tower
+  //checks towerList to see if click is inside or overlapping an existing tower
    for (var i in towerList) {
     towerHit = hitTest(towerList[i], 40, 40, mxOffset, myOffset);
     if (towerHit) {
@@ -56,8 +63,10 @@
     }
    }
    
+   //Checks to see if a tower overlaps the button to place them
    buttonHit = hitTest(newTowerButton, 40, 40, mouseX, mouseY);
    
+   //Checks to see if a tower overlaps the no place zones
    for(i in mapBoundaryList) {
     mapHit = hitTest(mapBoundaryList[i], 40, 40, mxOffset, myOffset);
     if (mapHit) {
@@ -65,6 +74,7 @@
     }
    }
    
+   //Checks to see if the tower overlaps the path
    for(i in pathBoundaryList) {
     pathHit = hitTest(pathBoundaryList[i], 40, 40,mxOffset, myOffset);
     if (pathHit) {
@@ -189,3 +199,12 @@
    
    return  false;
   }
+  
+  /****************************************************
+   * Much like hit test but for when we only want to 
+   * see if inside the object has been clocked. Sort of
+   * like a button
+   * **************************************************/
+   function clickTest(obj, mx, my) {
+    return ((obj.x <= mx) && (obj.x + obj.width >= mx) && (obj.y <= my) && (obj.y + obj.height >= my))
+   }

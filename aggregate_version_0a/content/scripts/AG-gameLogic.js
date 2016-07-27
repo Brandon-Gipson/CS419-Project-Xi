@@ -41,9 +41,16 @@ var renderLoop = function() {
             towerList[i].drawLaser();
         }
     }
+    
     if(newTowerButton.press) {
         newTowerButton.drawOutline();
         mouseOutline.drawOutline();
+    }
+    
+    for(i in towerList) {
+        if(towerList[i].clicked == true) {
+            towerList[i].drawMenu();
+        }
     }
     
     //Makes boundaries visible in red
