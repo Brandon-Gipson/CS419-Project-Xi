@@ -111,7 +111,7 @@ tower.prototype.drawMenu = function() {
     var xOffset = this.x - (widthOffset + 5);
     var yOffset = this.y - this.height;
     
-    if ((xOffset + widthOffset) > game_field.width) { //Will fix this in a bit
+    if (xOffset  < 1) { //Will fix this in a bit
         xOffset += widthOffset + 50;
     } 
     
