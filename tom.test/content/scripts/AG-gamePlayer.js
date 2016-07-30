@@ -6,8 +6,8 @@
 * Project Team: Xi
 * Members: Brandon Gipson, Tom Dale, James Pool
 *
-* Filename: gameUnits.js
-* Version: 0b
+* Filename: gamePlayer.js
+* Version: 0
 * Description: Player class to hold game parameters
 *
 *****************************************************************************/

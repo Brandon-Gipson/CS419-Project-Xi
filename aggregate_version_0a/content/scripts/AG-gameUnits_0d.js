@@ -7,7 +7,7 @@
 * Members: Brandon Gipson, Tom Dale, James Pool
 *
 * Filename: gameUnits.js
-* Version: 0c
+* Version: 0d
 * Description: Tower defense unit class and associated functions
 *
 *****************************************************************************/
@@ -97,22 +97,42 @@ unit.prototype.draw = function() {
     ctx.strokeRect(Hx, Hy, Hw, Hh);
 };
 
-/*********************** Unit Utility Functions *****************************/
-var addUnit = function(R, G, B, healthMod) {
-    // Randomly select a new unit from availible units
-    //var newUnit;
-    //var newUnitType = Math.floor(Math.random() * unitTypeList.length);
-    //newUnit = new unitTypeList[newUnitType]();
-    
-    var newUnit = new colorBlock(R,G,B, healthMod);
-    //incrementColor();
-
-    // Set initial waypoint
-    newUnit.x = waypointList[0].x;
-    newUnit.y = waypointList[0].y;
-    
-    unitList.push(newUnit);  // Add unit to unit list
+/* On Spawn Function: When a unit is added to the list */
+unit.prototype.onSpawn = function() {
+    // Do Nothing
 };
+
+/* On Death Function: When a unit is killed & removed from list */
+unit.prototype.onDeath = function() {
+    // Do Nothing
+};
+
+
+/*********************** Unit Utility Functions *****************************/
+// Legacy addUnit function for use with gameWaves
+var addUnit = function(R, G, B, healthMod) {
+
+    var newUnit = new colorBlock(R,G,B, healthMod);
+    
+    _addUnit(newUnit);
+};
+
+// Internal addUnit function
+function _addUnit(newUnit) {
+    // Check for default coordinates
+    if (newUnit.x == 0) {
+        newUnit.x = waypointList[0].x;
+    }
+    if (newUnit.y == 0) {
+        newUnit.y = waypointList[0].y;
+    }
+    
+    // Run spawn function
+    newUnit.onSpawn();
+    
+    // Add unit to list
+    unitList.push(newUnit);
+}
 
 var removeDead = function() {
     // Remove units from end to beginning
@@ -123,6 +143,7 @@ var removeDead = function() {
         }
         else if (unitList[i].health <= 0) {  // Unit is killed
             coins.amount += unitList[i].value;
+            unitList[i].onDeath();  // Run on death function
             unitList.splice(i,1);  // Remove unit
         }
     }
@@ -205,5 +226,25 @@ function colorBlock(R,G,B, healthMod) {
     this.setFullHealth( HEALTH_FACTOR[R] * healthMod );
     this.height = 20 * SIZE_FACTOR[B];
     this.width = this.height;
+    
+    this.onSpawn = function() {
+       // console.log("color: " + this.color);
+    };
+    
+    if (this.blue > 0) {
+        this.onDeath = function() {
+            for (var i = 0; i < this.blue; i++) {
+                console.log("Spawn Extras ...");
+                var newUnit = new colorBlock(0,3,0,1);  // Spawn a green (for test)
+                
+                // Set to parent's position
+                newUnit.x = this.x;
+                newUnit.y = this.y;
+                newUnit.waypoint = this.waypoint;
+                
+                _addUnit(newUnit);  // Call internal add unit
+            }
+        };
+    }
 }
 colorBlock.prototype = Object.create(unit.prototype);

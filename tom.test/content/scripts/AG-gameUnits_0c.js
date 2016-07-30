@@ -97,6 +97,17 @@ unit.prototype.draw = function() {
     ctx.strokeRect(Hx, Hy, Hw, Hh);
 };
 
+/* On Spawn Function: When a unit is added to the list */
+unit.prototype.onSpawn = function() {
+    // Do Nothing
+};
+
+/* On Death Function: When a unit is killed & removed from list */
+unit.prototype.onDeath = function() {
+    // Do Nothing
+};
+
+
 /*********************** Unit Utility Functions *****************************/
 var addUnit = function(R, G, B, healthMod) {
     // Randomly select a new unit from availible units
@@ -111,6 +122,9 @@ var addUnit = function(R, G, B, healthMod) {
     newUnit.x = waypointList[0].x;
     newUnit.y = waypointList[0].y;
     
+    // Run on spawn function
+    newUnit.onSpawn();
+    
     unitList.push(newUnit);  // Add unit to unit list
 };
 
@@ -123,6 +137,7 @@ var removeDead = function() {
         }
         else if (unitList[i].health <= 0) {  // Unit is killed
             coins.amount += unitList[i].value;
+            unitList[i].onDeath();  // Run on death function
             unitList.splice(i,1);  // Remove unit
         }
     }
@@ -202,8 +217,22 @@ function colorBlock(R,G,B, healthMod) {
     var SPEED_FACTOR = [0.8, 1, 1.5, 2];
     
     this.speed = SPEED_FACTOR[G];
-    this.setFullHealth( HEALTH_FACTOR[R] * healthMod );
+    this.setFullHealth( HEALTH_FACTOR[R] * healthMod + 200);
     this.height = 20 * SIZE_FACTOR[B];
     this.width = this.height;
+    
+    
+    this.onSpawn = function() {
+       // console.log("color: " + this.color);
+    };
+    
+    if (this.blue > 0) {
+        this.onDeath = function() {
+            for (var i = 0; i < this.blue; i++) {
+                console.log("Spawn Extras ...");
+                addUnit(0,3,0,1);  // Spawn a white with half health
+            }
+        };
+    }
 }
 colorBlock.prototype = Object.create(unit.prototype);

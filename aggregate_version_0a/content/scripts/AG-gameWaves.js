@@ -39,6 +39,10 @@ function spawnUnit(wave) {
                 //spawn that unit
         
                 addUnit(wave.units[i].r, wave.units[i].g, wave.units[i].b, wave.healthMod);
+                //var newUnit = new colorBlock(wave.units[i].r, wave.units[i].g, wave.units[i].b, wave.healthMod);
+                //addUnit(newUnit);
+                
+                
                 break;    
             
             }

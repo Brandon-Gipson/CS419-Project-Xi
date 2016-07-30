@@ -34,14 +34,19 @@ function tower(x,y) {
     this.laserColor = 'gray';
     this.laserWidth = 1;
     this.damage = 1;
-    this.fireRateMax = 3;      //value you trigger when tower shoots
+    this.fireRateMax = 5;      //value you trigger when tower shoots
     this.fireRateCount = 0;    //counter used to know when to fire
     this.range = 100;
     this.removeTower = false;  // Set to true have tower removed
-    this.target = null;
+    this.target = [null, null, null, null];
+    this.maxTargets = 1;
+    
+    //Gem Properties
     this.redCount = 0;
     this.blueCount = 0;
     this.greenCount = 0;
+    this.gemCount = 0;
+    
   
     // Tower Upgrade Gems
     this.slot1 = {
@@ -69,6 +74,10 @@ tower.prototype.clearGem = function(slotNumber) {
     if(slotNumber == 3) {
         this.slot3.color = "gray";
     }
+    
+    this.gemCount--;
+    tower = this;
+    modifyTower(tower);
 };
 
 /* Set designated gem slot (gemColor is a string) */
@@ -84,7 +93,59 @@ tower.prototype.updateGem = function(gemColor, slotNumber) {
     if(slotNumber == 3) {
         this.slot3.color = gemColor;
     }
+    
+    this.gemCount++;
+    tower = this;
+    modifyTower(tower);
+    
 };
+
+/* Helper function to modify color counts */
+tower.prototype.checkColors = function() {
+    
+    //reset colors
+    tempRedCount = 0;
+    tempBlueCount = 0;
+    tempGreenCount = 0;
+    
+    //slot 1
+    if (this.slot1.color == 'red') {
+        tempRedCount += 1;
+    }
+    else if (this.slot1.color == 'green') {
+        tempGreenCount += 1;
+    }
+    else if (this.slot1.color == 'blue') {
+        tempBlueCount += 1;
+    }
+    
+    //slot 2
+    if (this.slot2.color == 'red') {
+        tempRedCount += 1;
+    }
+    else if (this.slot2.color == 'green') {
+        tempGreenCount += 1;
+    }
+    else if (this.slot2.color == 'blue') {
+        tempBlueCount += 1;
+    }
+    
+    //slot 3
+    if (this.slot3.color == 'red') {
+        tempRedCount += 1;
+    }
+    else if (this.slot3.color == 'green') {
+        tempGreenCount += 1;
+    }
+    else if (this.slot3.color == 'blue') {
+        tempBlueCount += 1;
+    }
+    
+    this.redCount = tempRedCount;
+    this.greenCount = tempGreenCount;
+    this.blueCount = tempBlueCount;
+};
+
 
 /* Rendering Function: Draws the tower and gems onto the canvas */
 tower.prototype.draw = function() {
@@ -97,29 +158,20 @@ tower.prototype.draw = function() {
     
 };
 
-/* Outlines the tower when clicked */
-tower.prototype.drawOutline = function() {
-    ctx.lineWidth = '2';
-    ctx.strokeStyle = 'black';
-    ctx.strokeRect(this.x, this.y, this.width, this.height);
-  },
-
 /* Rendering Function: Draws the tower's menu */
 tower.prototype.drawMenu = function() {
+    var xOffset = this.x - 10;
+    var yOffset = this.y - 10;
     var widthOffset = this.width + 35;
     var heightOffset = this.height + 125;
-    var xOffset = this.x - (widthOffset + 5);
-    var yOffset = this.y - this.height;
     
-    if ((xOffset + widthOffset) > game_field.width) { //Will fix this in a bit
-        xOffset += widthOffset + 50;
+    if ((xOffset + widthOffset) > game_field.width) {
+        xOffset -= widthOffset;
     } 
     
     if ((yOffset + heightOffset) > game_field.height) {
-        yOffset -= this.height;
+        yOffset -= heightOffset;
     } 
-    
-    
     
     //draws the menu background
     ctx.fillStyle = "#e4d2ba";
@@ -181,24 +233,30 @@ tower.prototype.drawMenu = function() {
 }
   
 /* Rendering Function: Draws the laser from tower to the enemy */
-tower.prototype.drawLaser = function() {
+tower.prototype.drawLaser = function(j) {
     ctx.beginPath();
     ctx.moveTo(this.centerX, this.centerY);
-    ctx.lineTo(this.target.x, this.target.y);
+    ctx.lineTo(this.target[j].x, this.target[j].y);
     ctx.strokeStyle = this.laserColor;
     ctx.lineWidth = this.laserWidth;
     ctx.stroke();
 };
   
 /* Logic Function: Deals damage to a targeted unit */
-tower.prototype.shoot = function(){
+tower.prototype.shoot = function(x){
     //do damage to unit
-    this.target.health = this.target.health - this.damage;
+    //calc damage based on units resistance
+    console.log("Shooting at target: " + x);
+    console.log("Target " + x + ": " + this.target[x].red);
+    
+    this.target[x].health = this.target[x].health - this.damage;
     
     //set to 0 for logic loop to know to clean up unit remove from towers target
-    if (this.target.health <= 0) {
-        this.target.health = 0;
-        this.target = null;
+    if (this.target[x].health <= 0) {
+        this.target[x].health = 0;
+        
+        //set target back to null so attack function knows to find new target
+        this.target[x] = null;
     }
 };
   
@@ -215,33 +273,50 @@ tower.prototype.attack = function(unitList){
     
     //check if in range then shoot
     else {
-    
-        if (tower.target != null) {
-            var distSq = Math.pow((tower.x - tower.target.x), 2) + Math.pow((tower.y - tower.target.y), 2);
-            //if not in range anymore remove target (range less than distance)
-            if (Math.pow(tower.range, 2) < distSq){
-                tower.target = null;
-            }
-        }
         
-        //if doesnt have a target find one
-        if (tower.target == null) {
-            for (var i = 0; i < unitList.length; i++){
-                //calculate distance from tower x.y to unit x.y
-                distSq = Math.pow((tower.x - unitList[i].x), 2) + Math.pow((tower.y - unitList[i].y), 2);
-                //check if within tower range
-                if (Math.pow(tower.range, 2) > distSq){
-                    //set the unit as the towers target
-                    tower.target = unitList[i];
-                    break;
+        //run for max number of targets
+        for(var j = 0; j < tower.maxTargets; j++) {
+            //check if current target is in range still
+            if (tower.target[j] != null) {
+                var distSq = Math.pow((tower.x - tower.target[j].x), 2) + Math.pow((tower.y - tower.target[j].y), 2);
+                //if not in range anymore remove target (range less than distance)
+                if (Math.pow(tower.range, 2) < distSq){
+                    tower.target[j] = null;
                 }
             }
-        }
         
-        //if the unit was in range, or found a new target shoot
-        if (tower.target != null){
-            tower.fireRateCount = 0;
-            tower.shoot();
+            //if doesnt have a target find one
+            if (tower.target[j] == null) {
+                for (var i = 0; i < unitList.length; i++){
+                    //calculate distance from tower x.y to unit x.y
+                    distSq = Math.pow((tower.x - unitList[i].x), 2) + Math.pow((tower.y - unitList[i].y), 2);
+                    //check if within tower range
+                    if (Math.pow(tower.range, 2) > distSq){
+                        //make sure not already targeted by this tower
+                        var canTarget = true; //bool used to know if we can target this mob
+                        for (var k = 0; k < tower.maxTargets; k++) {
+                            //look through current targets make sure this unit is already targeted
+                            if (unitList[i] == tower.target[k]){
+                                canTarget = false;
+                            }
+                        }
+                        
+                        //if eligible target set it, else continue looping for new target
+                        if(canTarget ==  true) {
+                            //set the unit as the towers target
+                            tower.target[j] = unitList[i];
+                            break;
+                        }
+                    }
+                }
+            }
+            
+            //if the unit was in range, or found a new target shoot
+            //if it shoots at least once reset fire count
+            if (tower.target[j] != null){
+                tower.fireRateCount = 0;
+                tower.shoot(j); //pass in what target its shooting
+            }
         }
     }
 };
@@ -273,8 +348,35 @@ var towerTypeList = [baseTower];
 function baseTower(x,y) {
     tower.call(this, x, y);  // Call tower superclass constructor
     this.towerColor = 'gray';
-    this.laserColor = 'red';
-    this.damage = 2;
+    this.laserColor = getColor(0,0,0);
+    this.damage = 10;
     this.cost = 100;
+    
+    this.updateGem('blue', 1);
 }
 baseTower.prototype = Object.create(tower.prototype);
+
+/* Function that modiffies the tower parameters when gems are added or removed */
+function modifyTower(tower){
+    
+    //update towers colors
+    tower.checkColors();
+    
+    //set of factors gems control
+    var DAMAGE_FACTOR = [1, 1.5, 2, 2.5];
+    var RANGE_FACTOR = [1, 2, 3, 4];
+    var TARGET_FACTOR = [0, 1, 2, 3];
+    var TOWER_LEVEL = [1, 2, 4, 8];
+    
+    // Tower Attack Attributes
+    tower.laserColor = getColor(tower.redCount * 3,tower.greenCount * 3, tower.blueCount * 3);
+    
+    //modify damage by tower level and gem
+    tower.damage =((10 * TOWER_LEVEL[tower.gemCount]) * DAMAGE_FACTOR[tower.redCount]);
+    
+    //modify by gem
+    tower.range = 100 * RANGE_FACTOR[tower.greenCount];
+    
+    //modify max targets by gem
+    tower.maxTargets = 1 + TARGET_FACTOR[tower.blueCount];
+}

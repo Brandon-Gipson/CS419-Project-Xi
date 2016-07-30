@@ -16,15 +16,30 @@ var game_field = document.getElementById('game_field');
 var ctx = game_field.getContext('2d');
 ctx.shadowBlur = "black";
 ctx.shadowBlur = 20;
-var frameRate = 30;
+var frameRate = 5;
 var delay = 25;  // Unit Delay <<TEST>>
 var delayMax = 25;
+
+//Background music control variables
+var bgm = document.getElementById('bgm');
+bgm.volume = 0.0;
+var buttonClick = document.getElementById('buttonclick');
+buttonClick.volume = 0.0;
+
+var placementThud = document.getElementById('placeTower');
+
+var laserSound = document.getElementById('pewpew');
+laserSound.volume = .25;
 
 var renderLoop = function() {
     ctx.beginPath();
     ctx.clearRect(0,0,game_field.width,game_field.height);  //Clear game field+
     //Test to draw tower placing toggle
     newTowerButton.draw();
+    // Draw Gem buttons
+    redGemButton.draw();
+    blueGemButton.draw();
+    greenGemButton.draw();
     // Draw Health
     hearts.draw();
     // Draw Coins
@@ -37,12 +52,23 @@ var renderLoop = function() {
     for (var i = 0; i < towerList.length; i++) {
         towerList[i].draw();
         // Fire Laser!
-        if (towerList[i].target != null) {
-            towerList[i].drawLaser();
+        for (var j = 0; j < towerList[i].maxTargets; j++) {
+            if (towerList[i].target[j] != null) {
+                towerList[i].drawLaser(j);
+                //laserSound.play();
+            }
         }
     }
+    
     if(newTowerButton.press) {
         newTowerButton.drawOutline();
+        mouseOutline.drawOutline();
+    }
+    
+    for(i in towerList) {
+        if(towerList[i].clicked == true) {
+            towerList[i].drawMenu();
+        }
     }
     
     //Makes boundaries visible in red

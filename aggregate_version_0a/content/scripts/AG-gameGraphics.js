@@ -149,6 +149,93 @@ var newTowerButton = {
 };
 
 /******************************************
+ * A button that toggles to let you place 
+ * a gem in a tower
+ * **************************************/
+var redGemButton = {
+  press: false,
+  width: 20,
+  height: 20,
+  x: 55,
+  y: 575,
+  
+  drawOutline: function() {
+    ctx.lineWidth = '1';
+    ctx.strokeStyle = 'black';
+    ctx.strokeRect(this.x, this.y, this.width, this.height);
+  },
+  
+  draw: function() {
+    ctx.fillStyle="red";
+    ctx.fillRect(this.x, this.y, this.height, this.width);
+    
+    ctx.fillStyle = "gold";
+    ctx.font = "Bold 20px Arial";
+    ctx.textAlgn = "left";
+    ctx.textBaseline = "top";
+    ctx.fillText("G", 58, 575);
+  }
+};
+
+/******************************************
+ * A button that toggles to let you place 
+ * a gem in a tower
+ * **************************************/
+var blueGemButton = {
+  press: false,
+  width: 20,
+  height: 20,
+  x: 80,
+  y: 575,
+  
+  drawOutline: function() {
+    ctx.lineWidth = '1';
+    ctx.strokeStyle = 'black';
+    ctx.strokeRect(this.x, this.y, this.width, this.height);
+  },
+  
+  draw: function() {
+    ctx.fillStyle="blue";
+    ctx.fillRect(this.x, this.y, this.height, this.width);
+    
+    ctx.fillStyle = "gold";
+    ctx.font = "Bold 20px Arial";
+    ctx.textAlgn = "left";
+    ctx.textBaseline = "top";
+    ctx.fillText("G", 83, 575);
+  }
+};
+
+/******************************************
+ * A button that toggles to let you place 
+ * a gem in a tower
+ * **************************************/
+var greenGemButton = {
+  press: false,
+  width: 20,
+  height: 20,
+  x: 105,
+  y: 575,
+  
+  drawOutline: function() {
+    ctx.lineWidth = '1';
+    ctx.strokeStyle = 'black';
+    ctx.strokeRect(this.x, this.y, this.width, this.height);
+  },
+  
+  draw: function() {
+    ctx.fillStyle="green";
+    ctx.fillRect(this.x, this.y, this.height, this.width);
+    
+    ctx.fillStyle = "gold";
+    ctx.font = "Bold 20px Arial";
+    ctx.textAlgn = "left";
+    ctx.textBaseline = "top";
+    ctx.fillText("G", 108, 575);
+  }
+};
+
+/******************************************
  * An object to draw bounds outline around
  * mouse for tower placement
  * ***************************************/

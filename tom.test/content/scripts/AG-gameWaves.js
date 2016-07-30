@@ -75,12 +75,14 @@ var waveUnits = [];
 //wave 0
 waveUnits.push(
     [
-        {count: 55, r: 0, g: 0, b: 0},
-        {count: 15, r: 1, g: 0, b: 0},
-        {count: 15, r: 0, g: 1, b: 0},
-        {count: 15, r: 0, g: 0, b: 1}
+        {count: 1, r: 0, g: 0, b: 0},
+        {count: 1, r: 1, g: 0, b: 0},
+        {count: 0, r: 0, g: 1, b: 0},
+        {count: 0, r: 0, g: 0, b: 1}
     ]
 );
+
+/*
 //wave 1
 waveUnits.push(
     [
