@@ -267,6 +267,13 @@ upperLeftSec = {
     width: 160,
     height: 360
   },
+  
+  upperLeftNP = {
+    x: -100,
+    y: 360,
+    width: 110,
+    height: 60
+  },
    
   upperMidSec = {
     x: 160,
@@ -281,11 +288,25 @@ upperLeftSec = {
     width: 150,
     height: 360
   },
+  
+  upperRightNP = {
+    x: 1110,
+    y: 360,
+    width: 100,
+    height: 60
+  },
    
   bottomLeftSec = {
     x: 0,
     y: 550,
     width: 350,
+    height: 60
+  },
+  
+  bottomLeftNP = {
+    x: -100,
+    y: 490,
+    width: 110,
     height: 60
   },
    
@@ -302,6 +323,13 @@ upperLeftSec = {
     width: 350,
     height: 60
   },
+  
+  bottomRightNP = {
+    x: 1110,
+    y: 490,
+    width: 100,
+    height: 60
+  }
 ];
 
 /**************************************
@@ -312,36 +340,36 @@ upperLeftSec = {
 var pathBoundaryList = [
   pathPart1 = {
     x: 0,
-    y: 427,
+    y: 420,
     width: 290,
-    height: 65
+    height: 70
   },
   
   pathPart2 = {
-    x: 230,
+    x: 220,
     y: 127,
-    width: 62.5,
+    width: 70,
     height: 300
   },
   
   pathPart3 = {
     x: 220,
-    y: 127,
+    y: 120,
     width: 690,
-    height: 65
+    height: 70
   },
   
   pathPart4 = {
-    x: 850,
+    x: 840,
     y: 127,
-    width: 62.5,
+    width: 70,
     height: 300
   },
   
   pathPart5 = {
     x: 840,
-    y: 427,
+    y: 420,
     width: 270,
-    height: 65
+    height: 70
   }
 ];
