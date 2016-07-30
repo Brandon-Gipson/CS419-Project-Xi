@@ -52,10 +52,14 @@ var renderLoop = function() {
     for (var i = 0; i < towerList.length; i++) {
         towerList[i].draw();
         // Fire Laser!
-        if (towerList[i].target != null) {
-            towerList[i].drawLaser();
-            //laserSound.play();
+        for (var j = 0; j < towerList[i].maxTargets; j++) {
+            if (towerList[i].target[j] != null) {
+                towerList[i].drawLaser(j);
+                //laserSound.play();
+            }
         }
+        // Draw turret
+        towerList[i].drawTurret();
     }
     
     if(newTowerButton.press) {

@@ -25,6 +25,10 @@ function unit() {
     this.escape = false;  // Set to true if unit escapes
     this.value = 1;
     
+    // Position offset from true waypoint
+    this.deltaX = _calcDelta();  // Horizontal offset
+    this.deltaY = _calcDelta();  // Vertical offset
+    
     // Visual properties
     this.color = 'gray';
     this.height = 20;
@@ -107,7 +111,6 @@ unit.prototype.onDeath = function() {
     // Do Nothing
 };
 
-
 /*********************** Unit Utility Functions *****************************/
 // Legacy addUnit function for use with gameWaves
 var addUnit = function(R, G, B, healthMod) {
@@ -121,10 +124,10 @@ var addUnit = function(R, G, B, healthMod) {
 function _addUnit(newUnit) {
     // Check for default coordinates
     if (newUnit.x == 0) {
-        newUnit.x = waypointList[0].x;
+        newUnit.x = waypointList[0].x + newUnit.deltaX;
     }
     if (newUnit.y == 0) {
-        newUnit.y = waypointList[0].y;
+        newUnit.y = waypointList[0].y + newUnit.deltaY;
     }
     
     // Run spawn function
@@ -148,6 +151,14 @@ var removeDead = function() {
         }
     }
 };
+
+/* Random Offset Function: Alters the unit's waypoint by a small amount */
+function _calcDelta() {
+    var maxShift = 10;  // Maximum shift off center
+    // Range = [-maxShift .. +maxShift]
+    var shift = Math.floor(Math.random() * (2 * maxShift + 1)) - maxShift;
+    return shift;
+}
 
 /************************** Unit Subclasses *********************************/
 // List of available units
@@ -223,7 +234,7 @@ function colorBlock(R,G,B, healthMod) {
     var SPEED_FACTOR = [0.8, 1, 1.5, 2];
     
     this.speed = SPEED_FACTOR[G];
-    this.setFullHealth( HEALTH_FACTOR[R] * healthMod );
+    this.setFullHealth( (HEALTH_FACTOR[R] * healthMod) +1000 );
     this.height = 20 * SIZE_FACTOR[B];
     this.width = this.height;
     
@@ -234,12 +245,11 @@ function colorBlock(R,G,B, healthMod) {
     if (this.blue > 0) {
         this.onDeath = function() {
             for (var i = 0; i < this.blue; i++) {
-                console.log("Spawn Extras ...");
                 var newUnit = new colorBlock(0,3,0,1);  // Spawn a green (for test)
                 
-                // Set to parent's position
-                newUnit.x = this.x;
-                newUnit.y = this.y;
+                // Set to parent's position & adjust delta values
+                newUnit.x = this.x - this.deltaX + newUnit.deltaX;
+                newUnit.y = this.y - this.deltaY + newUnit.deltaY;
                 newUnit.waypoint = this.waypoint;
                 
                 _addUnit(newUnit);  // Call internal add unit

@@ -226,9 +226,9 @@ tower.prototype.drawMenu = function() {
     ctx.fillStyle = "red";
     ctx.fillText("+" + this.redCount + " damage", xOffset + 8, yOffset + 115);
     ctx.fillStyle = "blue";
-    ctx.fillText("+" + this.blueCount + " range", xOffset + 8, yOffset + 130);
+    ctx.fillText("+" + this.blueCount + " targets", xOffset + 8, yOffset + 130);
     ctx.fillStyle = "green";
-    ctx.fillText("+" + this.greenCount + " targets", xOffset + 8, yOffset + 145);
+    ctx.fillText("+" + this.greenCount + " range", xOffset + 8, yOffset + 145);
     
 }
   
@@ -246,8 +246,8 @@ tower.prototype.drawLaser = function(j) {
 tower.prototype.shoot = function(x){
     //do damage to unit
     //calc damage based on units resistance
-    console.log("Shooting at target: " + x);
-    console.log("Target " + x + ": " + this.target[x].red);
+    //console.log("Shooting at target: " + x);
+    //console.log("Target " + x + ": " + this.target[x].red);
     
     this.target[x].health = this.target[x].health - this.damage;
     

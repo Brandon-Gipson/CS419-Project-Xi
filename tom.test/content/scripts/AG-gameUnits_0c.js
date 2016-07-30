@@ -217,7 +217,7 @@ function colorBlock(R,G,B, healthMod) {
     var SPEED_FACTOR = [0.8, 1, 1.5, 2];
     
     this.speed = SPEED_FACTOR[G];
-    this.setFullHealth( HEALTH_FACTOR[R] * healthMod + 200);
+    this.setFullHealth( HEALTH_FACTOR[R] * healthMod + 1000);
     this.height = 20 * SIZE_FACTOR[B];
     this.width = this.height;
     
