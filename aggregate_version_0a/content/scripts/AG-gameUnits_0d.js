@@ -142,10 +142,12 @@ var removeDead = function() {
     for (var i = unitList.length - 1; i >= 0; i--) {
         if (unitList[i].escape) {  // Unit escapes
             hearts.current -= 1;  // Remove a heart
+            heartLoss.play(); //Play damage taken sound
             unitList.splice(i,1);  // Remove unit
         }
         else if (unitList[i].health <= 0) {  // Unit is killed
             coins.amount += unitList[i].value;
+            coinDing.play(); //Play coin sound
             unitList[i].onDeath();  // Run on death function
             unitList.splice(i,1);  // Remove unit
         }

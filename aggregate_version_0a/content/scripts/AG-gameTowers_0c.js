@@ -21,6 +21,7 @@ function tower(x,y) {
     this.x = x; // left point
     this.y = y;  // top point
     this.cost = 1;
+    this.justPlaced = true;
     
     // Visual Properties
     this.towerColor = 'gray';
@@ -262,6 +263,18 @@ tower.prototype.drawLaser = function(j) {
     ctx.lineWidth = this.laserWidth;
     ctx.stroke();
 };
+
+tower.prototype.drawCost = function(alpha) {
+    var newX = this.x - 6;
+    var newY = this.y - 27;
+    
+    ctx.fillStyle = "rgba(255,215,0," + alpha + ")";
+    ctx.font = "Bold 25px Arial";
+    ctx.fillText("-" + this.cost, newX, newY);
+    ctx.lineWidth = '0.5';
+    ctx.strokeStyle = "rgba(255,165,0," + alpha + ")";
+    ctx.strokeText("-" + this.cost, newX, newY);
+};
   
 /* Logic Function: Deals damage to a targeted unit */
 tower.prototype.shoot = function(x){
@@ -345,11 +358,19 @@ tower.prototype.attack = function(unitList){
 /********************** Tower Utility Functions *****************************/
 /* Places a tower at specified (x, y) and adds to tower list */
 var placeTower = function(x, y, type) {
+    
     var newTower;
     type = type || 0;  // If no type is provided, default to 0
     newTower = new towerTypeList[type](x,y);  // Create new tower of base type
-    towerList.push(newTower);  // Add new tower to tower list
-    coins.amount -= newTower.cost;  // Subtract tower cost
+    if(coins.amount >= newTower.cost) {
+        placementThud.play();
+        towerList.push(newTower);  // Add new tower to tower list
+        coins.amount -= newTower.cost;  // Subtract tower cost
+    }
+    else {
+        noCoins.play();
+        coins.flash = true;
+    }
 };
 
 /* Removes a tower and refunds some resources [NEED TO DO] */

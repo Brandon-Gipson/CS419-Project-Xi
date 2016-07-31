@@ -62,6 +62,7 @@
    return;
   }
   
+  //check to see if mouse click is on green button
   if(clickTest(greenGemButton, mouseX, mouseY)){
    greenGemButton.press = true; //marks button as pressed
    newTowerButton.press = false;
@@ -72,6 +73,7 @@
    return;
   }
   
+  //check to see if mouse click is on blue button
   if(clickTest(blueGemButton, mouseX, mouseY)){
    blueGemButton.press = true; //marks button as pressed
    greenGemButton.press = false;
@@ -82,6 +84,7 @@
    return;
   }
   
+  //check to see if mouse click is on red button
   if(clickTest(redGemButton, mouseX, mouseY)){
    redGemButton.press = true; //marks button as pressed
    greenGemButton.press = false;
@@ -92,6 +95,7 @@
    return;
   }
   
+  //Places colored gem inside selected tower
   for(i in towerList) {
    if(towerList[i].clicked) {
     if(greenGemButton.press) {
@@ -150,7 +154,6 @@
   	// and if the button for tower placement has been pressed
   	if (!towerHit && !buttonHit && !mapHit && !pathHit && newTowerButton.press) {
   	    placeTower(mouseX - 18.5, mouseY - 18.5); 
-  	    placementThud.play();
   	                                   
   	    newTowerButton.press = false;
   	}
