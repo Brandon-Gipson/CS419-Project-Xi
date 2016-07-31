@@ -26,6 +26,9 @@ bgm.volume = 0.35;
 var buttonClick = document.getElementById('buttonclick');
 buttonClick.volume = 0.45;
 
+var rightClick = document.getElementById('rightClick');
+rightClick.volume = 0.45;
+
 var placementThud = document.getElementById('placeTower');
 
 var laserSound = document.getElementById('pewpew');
@@ -67,12 +70,25 @@ var renderLoop = function() {
         mouseOutline.drawOutline();
     }
     
+    if(greenGemButton.press) {
+        greenGemButton.drawOutline();
+    }
+    
+    if(blueGemButton.press) {
+        blueGemButton.drawOutline();
+    }
+    
+    if(redGemButton.press) {
+        redGemButton.drawOutline();
+    }
+    
     for(i in towerList) {
         if(towerList[i].clicked == true) {
             towerList[i].drawMenu();
             towerList[i].drawOutline();
         }
     }
+    
     
     //Makes boundaries visible in red
     // for (i in mapBoundaryList) {

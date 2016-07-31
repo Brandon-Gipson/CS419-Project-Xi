@@ -132,8 +132,8 @@ var newTowerButton = {
   y: 575,
   
   drawOutline: function() {
-    ctx.lineWidth = '1';
-    ctx.strokeStyle = 'black';
+    ctx.lineWidth = '2';
+    ctx.strokeStyle = 'white';
     ctx.strokeRect(this.x, this.y, this.width, this.height);
   },
   
@@ -145,6 +145,10 @@ var newTowerButton = {
     ctx.textAlgn = "left";
     ctx.textBaseline = "top";
     ctx.fillText("T", 33, 575);
+    
+    ctx.lineWidth = '1';
+    ctx.strokeStyle = 'black';
+    ctx.strokeRect(this.x, this.y, this.width, this.height);
   }
 };
 
@@ -160,8 +164,8 @@ var redGemButton = {
   y: 575,
   
   drawOutline: function() {
-    ctx.lineWidth = '1';
-    ctx.strokeStyle = 'black';
+    ctx.lineWidth = '2';
+    ctx.strokeStyle = 'white';
     ctx.strokeRect(this.x, this.y, this.width, this.height);
   },
   
@@ -174,6 +178,10 @@ var redGemButton = {
     ctx.textAlgn = "left";
     ctx.textBaseline = "top";
     ctx.fillText("G", 58, 575);
+    
+    ctx.lineWidth = '1';
+    ctx.strokeStyle = 'black';
+    ctx.strokeRect(this.x, this.y, this.width, this.height);
   }
 };
 
@@ -189,8 +197,8 @@ var blueGemButton = {
   y: 575,
   
   drawOutline: function() {
-    ctx.lineWidth = '1';
-    ctx.strokeStyle = 'black';
+    ctx.lineWidth = '2';
+    ctx.strokeStyle = 'white';
     ctx.strokeRect(this.x, this.y, this.width, this.height);
   },
   
@@ -203,6 +211,10 @@ var blueGemButton = {
     ctx.textAlgn = "left";
     ctx.textBaseline = "top";
     ctx.fillText("G", 83, 575);
+    
+    ctx.lineWidth = '1';
+    ctx.strokeStyle = 'black';
+    ctx.strokeRect(this.x, this.y, this.width, this.height);
   }
 };
 
@@ -218,8 +230,8 @@ var greenGemButton = {
   y: 575,
   
   drawOutline: function() {
-    ctx.lineWidth = '1';
-    ctx.strokeStyle = 'black';
+    ctx.lineWidth = '2';
+    ctx.strokeStyle = 'white';
     ctx.strokeRect(this.x, this.y, this.width, this.height);
   },
   
@@ -232,6 +244,10 @@ var greenGemButton = {
     ctx.textAlgn = "left";
     ctx.textBaseline = "top";
     ctx.fillText("G", 108, 575);
+    
+    ctx.lineWidth = '1';
+    ctx.strokeStyle = 'black';
+    ctx.strokeRect(this.x, this.y, this.width, this.height);
   }
 };
 

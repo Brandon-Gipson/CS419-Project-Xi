@@ -81,17 +81,19 @@ tower.prototype.clearGem = function(slotNumber) {
 };
 
 /* Set designated gem slot (gemColor is a string) */
-tower.prototype.updateGem = function(gemColor, slotNumber) {
-    if(slotNumber == 1) {
-        this.slot1.color = gemColor;
-    }
+tower.prototype.updateGem = function(gemColor) {
     
-    if(slotNumber == 2) {
-        this.slot2.color = gemColor;
-    }
+    var slotList = [];
+    slotList.push(this.slot1);
+    slotList.push(this.slot2);
+    slotList.push(this.slot3);
     
-    if(slotNumber == 3) {
-        this.slot3.color = gemColor;
+    for(var i in slotList) {
+        if(slotList[i].color == "gray") {
+            slotList[i].color = gemColor;
+            
+            break;
+        }
     }
     
     this.gemCount++;
@@ -373,7 +375,7 @@ function baseTower(x,y) {
     
     
     //set to a blue tower for testing
-    this.updateGem('blue', 1);
+    // this.updateGem('blue', 1);
     
 }
 baseTower.prototype = Object.create(tower.prototype);

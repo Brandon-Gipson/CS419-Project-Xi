@@ -54,10 +54,67 @@
   //check to see if mouse click is on the new tower button
   if(clickTest(newTowerButton, mouseX, mouseY)){
    newTowerButton.press = true; //marks button as pressed
+   greenGemButton.press = false;
+   blueGemButton.press = false;
+   redGemButton.press = false;
    buttonClick.play();
  
    return;
   }
+  
+  if(clickTest(greenGemButton, mouseX, mouseY)){
+   greenGemButton.press = true; //marks button as pressed
+   newTowerButton.press = false;
+   blueGemButton.press = false;
+   redGemButton.press = false;
+   buttonClick.play();
+ 
+   return;
+  }
+  
+  if(clickTest(blueGemButton, mouseX, mouseY)){
+   blueGemButton.press = true; //marks button as pressed
+   greenGemButton.press = false;
+   newTowerButton.press = false;
+   redGemButton.press = false;
+   buttonClick.play();
+ 
+   return;
+  }
+  
+  if(clickTest(redGemButton, mouseX, mouseY)){
+   redGemButton.press = true; //marks button as pressed
+   greenGemButton.press = false;
+   blueGemButton.press = false;
+   newTowerButton.press = false;
+   buttonClick.play();
+ 
+   return;
+  }
+  
+  for(i in towerList) {
+   if(towerList[i].clicked) {
+    if(greenGemButton.press) {
+      towerList[i].updateGem('green');
+      greenGemButton.press = false;
+      break;
+    }
+    
+     if(blueGemButton.press) {
+       towerList[i].updateGem("blue");
+       blueGemButton.press = false;
+       break;
+     }
+     
+     
+     if(redGemButton.press) {
+       towerList[i].updateGem("red");
+       redGemButton.press = false;
+       break;
+     }
+   }
+  }
+  
   
   //Checks to see if the newTowerButton has been clicked  
   if(newTowerButton.press) { //If the tower placement button was pressed then do:
@@ -144,7 +201,7 @@
    }
     
    if(!mapHit && !pathHit) {
-    mouseOutline.color = "grey";
+    mouseOutline.color = "blue";
    }
    
    else {
@@ -163,7 +220,11 @@
   * *********************************************************/
   function contextmenuListener(e) {
    
+   rightClick.play();
    newTowerButton.press = false;
+   greenGemButton.press = false;
+   blueGemButton.press = false;
+   redGemButton.press = false;
    
    //prevents mouse click from effecting browser window
  	if (e.preventDefault) {
