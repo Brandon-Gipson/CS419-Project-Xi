@@ -206,51 +206,51 @@ tower.prototype.drawMenu = function() {
     ctx.textAlgn = "left";
     ctx.textBaseline = "center";
     ctx.font = "Bold 11px Arial";
-    ctx.fillText("Stats:", xOffset + 5, yOffset + 5);
+    ctx.fillText("Stats:", xOffset + 17, yOffset + 5);
     ctx.font = "Bold 8px Arial";
-    ctx.fillText("Range - " + this.range, xOffset + 8, yOffset + 20);
-    ctx.fillText("DPS - " + this.damage, xOffset + 8, yOffset + 30);
+    ctx.fillText("Range - " + this.range, xOffset + 28, yOffset + 20);
+    ctx.fillText("DPS - " + this.damage, xOffset + 23, yOffset + 30);
     
     //Gem slots. The word color changes to match the gem
     ctx.font = "Bold 11px Arial";
-    ctx.fillText("Gems:", xOffset + 5, yOffset + 50);
+    ctx.fillText("Gems:", xOffset + 20, yOffset + 50);
     
     ctx.font = "Bold 8px Arial";
     ctx.fillStyle = this.slot1.color;
     if(this.slot1.color == "gray") {
-        ctx.fillText("none", xOffset + 8, yOffset + 65);
+        ctx.fillText("none", xOffset + 20, yOffset + 65);
     }
     else {
-       ctx.fillText(this.slot1.color, xOffset + 8, yOffset + 65); 
+       ctx.fillText(this.slot1.color, xOffset + 20, yOffset + 65); 
     }
     
     ctx.fillStyle = this.slot2.color;
     if(this.slot2.color == "gray") {
-        ctx.fillText("none", xOffset + 8, yOffset + 75);
+        ctx.fillText("none", xOffset + 20, yOffset + 75);
     }
     else {
-       ctx.fillText(this.slot2.color, xOffset + 8, yOffset + 75); 
+       ctx.fillText(this.slot2.color, xOffset + 20, yOffset + 75); 
     }
     
     ctx.fillStyle = this.slot3.color;
     if(this.slot3.color == "gray") {
-        ctx.fillText("none", xOffset + 8, yOffset + 85);
+        ctx.fillText("none", xOffset + 20, yOffset + 85);
     }
     else {
-       ctx.fillText(this.slot3.color, xOffset + 8, yOffset + 85); 
+       ctx.fillText(this.slot3.color, xOffset + 20, yOffset + 85); 
     }
     
     //Bonuses give by gems
     ctx.fillStyle = "black";
     ctx.font = "Bold 11px Arial";
-    ctx.fillText("Bonuses:", xOffset + 5, yOffset + 100);
+    ctx.fillText("Bonuses:", xOffset + 28, yOffset + 100);
     ctx.font = "Bold 8px Arial";
     ctx.fillStyle = "red";
-    ctx.fillText("+" + this.redCount + " damage", xOffset + 8, yOffset + 115);
+    ctx.fillText("+" + this.redCount + " damage", xOffset + 23, yOffset + 115);
     ctx.fillStyle = "blue";
-    ctx.fillText("+" + this.blueCount + " targets", xOffset + 8, yOffset + 130);
+    ctx.fillText("+" + this.blueCount + " targets", xOffset + 23, yOffset + 130);
     ctx.fillStyle = "green";
-    ctx.fillText("+" + this.greenCount + " range", xOffset + 8, yOffset + 145);
+    ctx.fillText("+" + this.greenCount + " range", xOffset + 20, yOffset + 145);
     
 }
   
@@ -265,7 +265,7 @@ tower.prototype.drawLaser = function(j) {
 };
 
 tower.prototype.drawCost = function(alpha) {
-    var newX = this.x - 6;
+    var newX = this.x + 20;
     var newY = this.y - 27;
     
     ctx.fillStyle = "rgba(255,215,0," + alpha + ")";
@@ -284,6 +284,7 @@ tower.prototype.shoot = function(x){
     //console.log("Target " + x + ": " + this.target[x].red);
     
     this.target[x].health = this.target[x].health - this.damage;
+   
     
     //set to 0 for logic loop to know to clean up unit remove from towers target
     if (this.target[x].health <= 0) {

@@ -81,7 +81,8 @@ var hearts = {
  * Coins object for money tracking and displaying 
  * ************************************************/
 var coins = {
-  
+  x: 900,
+  y: 10,
   amount: 0,
   flash: false,
   
@@ -93,12 +94,12 @@ var coins = {
     var coinsImage = new Image();
     coinsImage.src = "./content/images/resourceAssets/coins.png";
     
-    ctx.drawImage(coinsImage, 900, 10, 55, 50);
+    ctx.drawImage(coinsImage, this.x, this.y, 55, 50);
     ctx.fillStyle = color;
     ctx.font = "Bold 48px Arial"; 
     ctx.textAlgn = "left";
     ctx.textBaseline = "top";
-    ctx.fillText(this.amount, 970, 10);
+    ctx.fillText(this.amount, this.x + 110, this.y);
   }
 };
 
@@ -126,7 +127,7 @@ var newTowerButton = {
     ctx.font = "Bold 20px Arial";
     ctx.textAlgn = "left";
     ctx.textBaseline = "top";
-    ctx.fillText("T", 33, 575);
+    ctx.fillText("T", this.x + 9, this.y);
     
     ctx.lineWidth = '1';
     ctx.strokeStyle = 'black';
@@ -159,7 +160,7 @@ var redGemButton = {
     ctx.font = "Bold 20px Arial";
     ctx.textAlgn = "left";
     ctx.textBaseline = "top";
-    ctx.fillText("G", 58, 575);
+    ctx.fillText("G", this.x + 10, this.y);
     
     ctx.lineWidth = '1';
     ctx.strokeStyle = 'black';
@@ -192,7 +193,7 @@ var blueGemButton = {
     ctx.font = "Bold 20px Arial";
     ctx.textAlgn = "left";
     ctx.textBaseline = "top";
-    ctx.fillText("G", 83, 575);
+    ctx.fillText("G", this.x + 10, this.y);
     
     ctx.lineWidth = '1';
     ctx.strokeStyle = 'black';
@@ -225,7 +226,7 @@ var greenGemButton = {
     ctx.font = "Bold 20px Arial";
     ctx.textAlgn = "left";
     ctx.textBaseline = "top";
-    ctx.fillText("G", 108, 575);
+    ctx.fillText("G", this.x + 10, this.y);
     
     ctx.lineWidth = '1';
     ctx.strokeStyle = 'black';
@@ -259,11 +260,25 @@ var greenGemButton = {
  * **************************************/
 var mapBoundaryList = [
  
-upperLeftSec = {
+upperLeftBorder = {
     x: 0,
     y: 0,
-    width: 160,
+    width: 10,
     height: 360
+  },
+  
+  upperLeftHearts = {
+    x: 0,
+    y: 0,
+    width: 220,
+    height: 60
+  },
+  
+  upperLeftTree = {
+    x: 0,
+    y: 170,
+    width: 110,
+    height: 90
   },
   
   upperLeftNP = {
@@ -277,56 +292,70 @@ upperLeftSec = {
     x: 160,
     y: 0,
     width: 810,
+    height: 10
+  },
+  
+  upperRightGold = {
+    x: 902,
+    y: 0,
+    width: 220,
     height: 60
   },
   
-  upperRightSec = {
-    x: 970,
-    y: 0,
-    width: 150,
-    height: 360
+  upperRightTree = {
+    x: 995,
+    y: 250,
+    width: 130,
+    height: 80
   },
   
   upperRightNP = {
     x: 1110,
-    y: 360,
+    y: 0,
     width: 100,
-    height: 60
+    height: 420
   },
    
-  bottomLeftSec = {
+  bottomLeftByButtons = {
     x: 0,
-    y: 550,
-    width: 350,
-    height: 60
+    y: 573,
+    width: 140,
+    height: 50
+  },
+  
+  bottomLeftSec = {
+    x: 140,
+    y: 600,
+    width: 220,
+    height: 10
   },
   
   bottomLeftNP = {
     x: -100,
     y: 490,
     width: 110,
-    height: 60
+    height: 100
   },
    
   bottomMidSec = {
-    x: 350,
-    y: 250,
-    width: 430,
+    x: 360,
+    y: 300,
+    width: 390,
     height: 360
   },
    
   bottomRightSec = {
-    x: 780,
-    y: 550,
-    width: 350,
-    height: 60
+    x: 750,
+    y: 600,
+    width: 370,
+    height: 10
   },
   
   bottomRightNP = {
     x: 1110,
     y: 490,
     width: 100,
-    height: 60
+    height: 110
   }
 ];
 

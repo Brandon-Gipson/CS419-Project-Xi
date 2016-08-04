@@ -17,15 +17,22 @@ var ctx = game_field.getContext('2d');
 ctx.shadowBlur = "black";
 ctx.shadowBlur = 20;
 var frameRate = 30;
-var delay = 25;  // Unit Delay <<TEST>>
-var delayMax = 25;
+var unitDelay = 25;  // Unit Delay <<TEST>>
+var unitDelayMax = 25;
 var counter = 2*frameRate;
 var coinCounter = frameRate/3;
 var alpha = 1.0;
 
+var waveDelay = 25;
+var waveDelayMax = 25;
+var runWave = false;
+var waveCountDown = 10;
+var gameOver = false;
+
+
 //Background music control variables
 var bgm = document.getElementById('bgm');
-bgm.volume = 0.35; //was 0.35
+bgm.volume = 0.25; //was 0.35
 var buttonClick = document.getElementById('buttonclick');
 buttonClick.volume = 0.45;
 
@@ -46,17 +53,25 @@ var heartLoss = document.getElementById('heartLoss');
 heartLoss.volume = 0.50;
 
 var renderLoop = function() {
+    
+    if (gameOver) {
+        wave_banner.drawGameOver();
+        return;  // Stop game
+    }
+    
     ctx.beginPath();
     ctx.clearRect(0,0,game_field.width,game_field.height);  //Clear game field+
     //Test to draw tower placing toggle
     newTowerButton.draw();
-    // Draw Gem buttons
+    
+    //--- Draw Gem buttons ---
     redGemButton.draw();
     blueGemButton.draw();
     greenGemButton.draw();
     // Draw Health
     hearts.draw();
-    // Draw Coins
+    
+    //--- Draw Coins ---
     if (coins.flash) {
         coinCounter--;
         coins.draw("red");
@@ -69,7 +84,10 @@ var renderLoop = function() {
         coins.draw("gold");
     }
   
-    // Draw Units
+    //--- Draw Wave Banner ---
+    wave_banner.draw();
+  
+    //--- Draw Units ---
     for (var i = 0; i < unitList.length; i++) {
         unitList[i].draw();
     }
@@ -93,7 +111,6 @@ var renderLoop = function() {
         for (var j = 0; j < towerList[i].maxTargets; j++) {
             if (towerList[i].target[j] != null) {
                 towerList[i].drawLaser(j);
-                //laserSound.play();
             }
         }
         // Draw turret
@@ -141,23 +158,42 @@ var renderLoop = function() {
 
 var logicLoop = function() {
     
-    // Add units to game <<TEST>>
-    if (delay < 0) {
-        
-        spawnUnit(curWave);
-        if (curWave.unitCount <= 0) {
-            //temp set wave back to wave 0
-            //curWave = createWave(curWave.waveNumber+1);
-            if (curWave.waveNumber < waveUnits.length-1) {
-                curWave = createWave(curWave.waveNumber+1);
-            }
-            else {
-                //spawn no more units
-            }
-        }
-        delay = delayMax;  // Reset delay
+    if (gameOver) {
+        return;  // Stop game
     }
-    delay--;
+    
+    if  (runWave) {
+    	if (unitDelay < 0) { 
+	    	spawnUnit(curWave);  // Spawn next unit
+	    	unitDelay = unitDelayMax;  // Reset unit Delay
+	    	if (curWave.unitCount <= 0) {
+	    	    if ((curWave.waveNumber + 1) >= waveUnits.length) { // End of Game
+	    	        gameOver = true;  // Set game over flag
+	    	    }
+	    	    else {
+		    	    curWave = createWave(curWave.waveNumber + 1);  // Next wave
+		    	    wave_banner.currentWave = curWave.waveNumber + 1;  // Set banner wave number (+1 for 0 indexing)
+		    	    runWave = false;  // Pause for next wave
+	    		    waveCountDown = 10;  // Set counddown timer
+	    		    wave_banner.countDown = waveCountDown;  // Update banner
+    	        }
+		    }
+	    }
+	    unitDelay--;
+    }
+    else {
+	    if (waveDelay < 0) {
+		    waveCountDown--;
+	    	wave_banner.countDown = waveCountDown;  // Update banner
+	    	if (waveCountDown <= 0)  {
+		    	runWave = true;  // Run next wave
+		    }
+		    waveDelay = waveDelayMax;  // Reset wave Delay
+	    }
+	    waveDelay--;
+    }
+    
+    //console.log("runWave: " + runWave + "; curWave: " + curWave.waveNumber + "; waveCountDown: " + waveCountDown);
     
     // Replace Hearts
     if (hearts.current <= 0) {
@@ -182,12 +218,11 @@ var logicLoop = function() {
 window.onload = function() {
     loadPath();
     loadPlayer();
-    // Debug waypoint list
-    //console.log("Waypoint Lenght: " + waypointList.length);
-    //for (var i = 0; i < waypointList.length; i++) {
-    //    console.log("Waypoint " + i + ": (" + waypointList[i].x + ", " + waypointList[i].y + ")");
-    //}
 
+    // Load Graphical Elements
+    wave_banner = new waveBanner(ctx);
+
+    // Start Logic & Grapics Loops
     setTimeout(logicLoop, 1000/frameRate);
-    requestAnimationFrame(renderLoop);  // Start graphics rendering
+    requestAnimationFrame(renderLoop);
 };
