@@ -63,7 +63,7 @@ function spawnUnit(wave) {
 function createWave(waveNumber){
     this.waveNumber = waveNumber;
     this.units = waveUnits[waveNumber];
-    this.healthMod = 1 + ((0.1)*waveNumber);
+    this.healthMod = waveNumber+1;
     this.unitCount = 0;
     for (var i = 0; i < this.units.length; i++){
         this.unitCount += this.units[i].count;

@@ -231,14 +231,15 @@ function colorBlock(R,G,B, healthMod) {
     this.blue = B;
     
     // Set block parameters
-    var HEALTH_FACTOR = [15, 30, 50, 100];
+    var HEALTH_FACTOR = [1, 2, 4, 8];
     var SIZE_FACTOR = [0.8, 1, 1.2, 1.5];
     var SPEED_FACTOR = [0.8, 1, 1.5, 2];
     
     this.speed = SPEED_FACTOR[G];
-    this.setFullHealth( (HEALTH_FACTOR[R] * healthMod) +1000 );
+    this.setFullHealth( 100 * healthMod * HEALTH_FACTOR[R] );
     this.height = 20 * SIZE_FACTOR[B];
     this.width = this.height;
+    console.log(this.health);
     
     this.onSpawn = function() {
        // console.log("color: " + this.color);
