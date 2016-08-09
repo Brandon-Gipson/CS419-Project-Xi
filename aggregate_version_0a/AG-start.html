@@ -21,7 +21,12 @@
         <link href="content/startStyle.css" rel="stylesheet" type="text/css">
     </head>
     <body>
-        <div id='background'><div>Xi Tower Defense <a id='button' href='./AG-index.html'>Start Game</a></div></div>
+        <audio id = "startBGM" autoplay loop><source src="content/sounds/bgm/startBGM.mp3"></audio>
+        <div id='background'><div>Xi Tower Defense <a id='button' href='./AG-index.html'>Start Game!</a></div></div>
         
+        <script>
+                var startBGM = document.getElementById('startBGM');
+                startBGM.volume = .75;
+        </script>
     </body>
 </html>

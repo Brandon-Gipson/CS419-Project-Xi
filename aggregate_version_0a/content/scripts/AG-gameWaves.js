@@ -76,7 +76,7 @@ createWave.prototype = Object.create(wave.prototype);
 //wave unit information
 var waveUnits = [];
 
-//wave 0
+//wave 1
 waveUnits.push(
     [
         {count: 55, r: 0, g: 0, b: 0},
@@ -85,7 +85,7 @@ waveUnits.push(
         {count: 15, r: 0, g: 0, b: 1}
     ]
 );
-//wave 1
+//wave 2
 waveUnits.push(
     [
         {count: 25, r: 0, g: 0, b: 0},
@@ -95,6 +95,7 @@ waveUnits.push(
     ]
 );
 
+//wave 3
 waveUnits.push(
     [
         {count: 10, r: 0, g: 0, b: 0},
@@ -106,17 +107,89 @@ waveUnits.push(
         {count: 10, r: 0, g: 0, b: 2}
     ]
 );
-
-/*
+//wave 4
 waveUnits.push(
     [
-        {count: , r: , g: , b: },
-        {count: , r: , g: , b: },
-        {count: , r: , g: , b: },
-        {count: , r: , g: , b: },
-        {count: , r: , g: , b: },
-        {count: , r: , g: , b: }
+        {count: 20, r: 2, g: 0, b: 0},
+        {count: 20, r: 0, g: 2, b: 0},
+        {count: 20, r: 0, g: 0, b: 2},
+        {count: 10, r: 2, g: 0, b: 1},
+        {count: 10, r: 0, g: 1, b: 2},
+        {count: 10, r: 0, g: 2, b: 1},
+        {count: 10, r: 1, g: 0, b: 2}
     
     ]
 );
-*/
+//wave 5
+waveUnits.push(
+    [
+        {count: 10, r: 3, g: 0, b: 0},
+        {count: 10, r: 0, g: 3, b: 0},
+        {count: 10, r: 0, g: 0, b: 3},
+        {count: 10, r: 1, g: 1, b: 1},
+        {count: 10, r: 2, g: 1, b: 0},
+        {count: 10, r: 2, g: 0, b: 1},
+        {count: 10, r: 0, g: 2, b: 1},
+        {count: 10, r: 1, g: 2, b: 0},
+        {count: 10, r: 0, g: 1, b: 2},
+        {count: 10, r: 1, g: 0, b: 2}
+    
+    ]
+);
+
+//wave 6
+waveUnits.push(
+    [
+        {count: 20, r: 3, g: 0, b: 0},
+        {count: 20, r: 0, g: 3, b: 0},
+        {count: 20, r: 0, g: 0, b: 3},
+        {count: 20, r: 1, g: 3, b: 0},
+        {count: 20, r: 3, g: 1, b: 0}
+    ]
+);
+
+//wave 7
+waveUnits.push(
+    [
+        {count: 20, r: 3, g: 0, b: 1},
+        {count: 20, r: 0, g: 3, b: 1},
+        {count: 20, r: 0, g: 1, b: 3},
+        {count: 20, r: 3, g: 1, b: 0},
+        {count: 20, r: 3, g: 1, b: 1}
+        
+    ]
+);
+
+//wave 8
+waveUnits.push(
+    [
+        {count: 20, r: 3, g: 1, b: 1},
+        {count: 20, r: 1, g: 1, b: 3},
+        {count: 20, r: 1, g: 3, b: 1},
+        {count: 20, r: 3, g: 2, b: 0},
+        {count: 20, r: 0, g: 3, b: 2}
+    ]
+);
+
+//wave 9
+waveUnits.push(
+    [
+        {count: 20, r: 3, g: 2, b: 0},
+        {count: 20, r: 3, g: 0, b: 2},
+        {count: 20, r: 2, g: 3, b: 0},
+        {count: 20, r: 0, g: 2, b: 3},
+        {count: 20, r: 3, g: 3, b: 0}
+    
+    ]
+);
+
+//wave 10
+waveUnits.push(
+    [
+        {count: 20, r: 3, g: 3, b: 0},
+        {count: 20, r: 0, g: 3, b: 3},
+        {count: 20, r: 3, g: 0, b: 3},
+        {count: 40, r: 3, g: 3, b: 3}
+    
+    ]
+);

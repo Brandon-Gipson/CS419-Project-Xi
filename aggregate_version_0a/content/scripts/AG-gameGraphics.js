@@ -18,8 +18,8 @@
 var hearts = {
   x: 10,
   y: 10,
-  max: 4,
-  current: 4,
+  max: 5,
+  current: 5,
   updateMax: function(max) {
     this.max = max;  
   },

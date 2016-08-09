@@ -22,6 +22,7 @@ function tower(x,y) {
     this.y = y;  // top point
     this.cost = 1;
     this.justPlaced = true;
+    this.gemJustPlaced = false;
     
     // Visual Properties
     this.towerColor = 'gray';
@@ -47,7 +48,7 @@ function tower(x,y) {
     this.blueCount = 0;
     this.greenCount = 0;
     this.gemCount = 0;
-    
+    this.gemCosts = [150, 250, 300];
   
     // Tower Upgrade Gems
     this.slot1 = {
@@ -83,24 +84,36 @@ tower.prototype.clearGem = function(slotNumber) {
 
 /* Set designated gem slot (gemColor is a string) */
 tower.prototype.updateGem = function(gemColor) {
-    
-    var slotList = [];
-    slotList.push(this.slot1);
-    slotList.push(this.slot2);
-    slotList.push(this.slot3);
-    
-    for(var i in slotList) {
-        if(slotList[i].color == "gray") {
-            slotList[i].color = gemColor;
-            
-            break;
-        }
-    }
-    
-    this.gemCount++;
     var tower = this;
-    modifyTower(tower);
     
+    if(coins.amount >= tower.gemCosts[tower.gemCount]) {
+        console.log(tower.gemCosts[tower.gemCount]);
+        coins.amount -= tower.gemCosts[tower.gemCount];  // Subtract gem cost
+        console.log(tower.gemCosts[tower.gemCount]);
+        var slotList = [];
+        slotList.push(tower.slot1);
+        slotList.push(tower.slot2);
+        slotList.push(tower.slot3);
+        
+        for(var i in slotList) {
+            if(slotList[i].color == "gray") {
+                slotList[i].color = gemColor;
+                
+                break;
+            }
+        }
+        
+        tower.gemCount++;
+        tower.gemJustPlaced = true;
+        
+        modifyTower(tower);
+            
+            
+    }
+    else {
+        noCoins.play();
+        coins.flash = true;
+    }
 };
 
 /* Helper function to modify color counts */
@@ -274,6 +287,20 @@ tower.prototype.drawCost = function(alpha) {
     ctx.lineWidth = '0.5';
     ctx.strokeStyle = "rgba(255,165,0," + alpha + ")";
     ctx.strokeText("-" + this.cost, newX, newY);
+};
+
+
+tower.prototype.drawGemCost = function(alpha) {
+    var tower = this;
+    var newX = tower.x + 20;
+    var newY = tower.y - 27;
+    
+    ctx.fillStyle = "rgba(255,215,0," + alpha + ")";
+    ctx.font = "Bold 25px Arial";
+    ctx.fillText("-" + tower.gemCosts[tower.gemCount-1], newX, newY);
+    ctx.lineWidth = '0.5';
+    ctx.strokeStyle = "rgba(255,165,0," + alpha + ")";
+    ctx.strokeText("-" + tower.gemCosts[tower.gemCount-1], newX, newY);
 };
   
 /* Logic Function: Deals damage to a targeted unit */

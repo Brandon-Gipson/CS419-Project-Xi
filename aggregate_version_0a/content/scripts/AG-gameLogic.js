@@ -16,7 +16,7 @@ var game_field = document.getElementById('game_field');
 var ctx = game_field.getContext('2d');
 ctx.shadowBlur = "black";
 ctx.shadowBlur = 20;
-var frameRate = 30;
+var frameRate = 200;
 var unitDelay = 25;  // Unit Delay <<TEST>>
 var unitDelayMax = 25;
 var counter = 2*frameRate;
@@ -32,7 +32,7 @@ var gameOver = false;
 
 //Background music control variables
 var bgm = document.getElementById('bgm');
-bgm.volume = 0.25; //was 0.35
+bgm.volume = 0.5; //was 0.35
 var buttonClick = document.getElementById('buttonclick');
 buttonClick.volume = 0.45;
 
@@ -47,12 +47,17 @@ laserSound.volume = 0.25;
 var noCoins = document.getElementById('noCoins');
 
 var coinDing = document.getElementById('coins');
-coinDing.volume = 0.50;
+coinDing.volume = 0.25;
 
 var heartLoss = document.getElementById('heartLoss');
 heartLoss.volume = 0.50;
 
+var gameOverSound = document.getElementById('gameOver');
+gameOverSound.volume = 0.20;
+
 var renderLoop = function() {
+    // Draw Health
+    hearts.draw();
     
     if (gameOver) {
         wave_banner.drawGameOver();
@@ -75,7 +80,7 @@ var renderLoop = function() {
     if (coins.flash) {
         coinCounter--;
         coins.draw("red");
-        if(coinCounter == 0) {
+        if(coinCounter <= 0) {
             coins.flash = false;
             coinCounter = frameRate/3;
         }
@@ -95,6 +100,7 @@ var renderLoop = function() {
     for (var i = 0; i < towerList.length; i++) {
         towerList[i].draw();
         
+        //Draw the cost of the tower and have it fade
         if(towerList[i].justPlaced) {
             counter--;
             towerList[i].drawCost(alpha);
@@ -102,6 +108,19 @@ var renderLoop = function() {
             
             if(counter == 0) {
                 towerList[i].justPlaced = false;
+                counter = 2*frameRate;
+                alpha = 1.0;
+            }
+        }
+        
+        //Draw the cost of the gem and have it fade
+        if(towerList[i].gemJustPlaced) {
+            counter--;
+            towerList[i].drawGemCost(alpha);
+            alpha -= 0.025;
+            
+            if(counter == 0) {
+                towerList[i].gemJustPlaced = false;
                 counter = 2*frameRate;
                 alpha = 1.0;
             }
@@ -117,23 +136,28 @@ var renderLoop = function() {
         towerList[i].drawTurret();
     }
     
+    //Draw outline for tower button press
     if(newTowerButton.press) {
         newTowerButton.drawOutline();
         mouseOutline.drawOutline();
     }
     
+    //Draw outline for green button press
     if(greenGemButton.press) {
         greenGemButton.drawOutline();
     }
     
+    //Draw outline for blue button press
     if(blueGemButton.press) {
         blueGemButton.drawOutline();
     }
     
+    //Draw outline for red button press
     if(redGemButton.press) {
         redGemButton.drawOutline();
     }
     
+    //Draw menu for towers
     for(i in towerList) {
         if(towerList[i].clicked == true) {
             towerList[i].drawMenu();
@@ -157,15 +181,17 @@ var renderLoop = function() {
 };
 
 var logicLoop = function() {
-    
+
     if (gameOver) {
-        return;  // Stop game
+        return;  // Stop game    
     }
-    
+
     if  (runWave) {
     	if (unitDelay < 0) { 
 	    	spawnUnit(curWave);  // Spawn next unit
 	    	unitDelay = unitDelayMax;  // Reset unit Delay
+	    	console.log(waveUnits.length);
+	    	console.log(waveUnits);
 	    	if (curWave.unitCount <= 0) {
 	    	    if ((curWave.waveNumber + 1) >= waveUnits.length) { // End of Game
 	    	        gameOver = true;  // Set game over flag
@@ -197,7 +223,9 @@ var logicLoop = function() {
     
     // Replace Hearts
     if (hearts.current <= 0) {
-        hearts.current = 5;
+        gameOver = true;
+        bgm.pause();
+        gameOverSound.play();
     }
     
     // Move units through game field
