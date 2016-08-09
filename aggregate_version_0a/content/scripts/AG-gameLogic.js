@@ -16,7 +16,7 @@ var game_field = document.getElementById('game_field');
 var ctx = game_field.getContext('2d');
 ctx.shadowBlur = "black";
 ctx.shadowBlur = 20;
-var frameRate = 30;
+var frameRate = 60;
 var unitDelay = 25;  // Unit Delay <<TEST>>
 var unitDelayMax = 25;
 var counter = 2*frameRate;
@@ -28,6 +28,7 @@ var waveDelayMax = 25;
 var runWave = false;
 var waveCountDown = 10;
 var gameOver = false;
+var gameWon = false;
 
 
 //Background music control variables
@@ -55,9 +56,17 @@ heartLoss.volume = 0.50;
 var gameOverSound = document.getElementById('gameOver');
 gameOverSound.volume = 0.20;
 
+var gameWinSound = document.getElementById('gameWin');
+gameWinSound.volume = 0.20;
+
 var renderLoop = function() {
     // Draw Health
     hearts.draw();
+    
+    if(gameWon) {
+        wave_banner.drawGameWon();
+        return; //Stop game
+    }
     
     if (gameOver) {
         wave_banner.drawGameOver();
@@ -182,6 +191,10 @@ var renderLoop = function() {
 
 var logicLoop = function() {
 
+    if (gameWon) {
+        return; // Stop game
+    }
+    
     if (gameOver) {
         return;  // Stop game    
     }
@@ -226,6 +239,13 @@ var logicLoop = function() {
         gameOver = true;
         bgm.pause();
         gameOverSound.play();
+    }
+    
+    if(wave_banner.currentWave >= 6){
+        gameWon = true;
+        bgm.pause();
+        gameWinSound.play();
+        
     }
     
     // Move units through game field

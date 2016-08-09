@@ -1,6 +1,6 @@
 #background {
-    position: absolute;
-	margin: 0 0 0 392px;
+    position: relative;
+    margin: 0 auto;
 	display: block;
 	width:1120px;
 	height:610px;
@@ -9,7 +9,10 @@
 
 #background div {
 	width:300px;
-	margin: 200px 0 0 400px;
+	position: absolute;
+	left: 50%;
+    top: 50%;
+	margin: -145px 0 0 -165px;
 	background-color: #fff;
 	border: 1px solid #000;
 	padding: 15px;

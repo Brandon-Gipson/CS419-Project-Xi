@@ -78,3 +78,21 @@ waveBanner.prototype.drawGameOver = function() {
     this.context.textAlign = this.textAlign;
     this.context.fillText(bannerMessage, this.textX, this.textY);
 };
+
+waveBanner.prototype.drawGameWon = function() {
+    var bannerImage = new Image();
+    var bannerMessage;
+    
+    // Setup background
+    bannerImage.src = this.backgroundImage;
+    this.context.drawImage(bannerImage, this.x, this.y, this.width, this.height);
+    
+    // Figure out Text String
+    bannerMessage = "Congratulations! You Win!";
+    
+    // Draw text
+    this.context.font = this.font;
+    this.context.fillStyle = this.fontColor;
+    this.context.textAlign = this.textAlign;
+    this.context.fillText(bannerMessage, this.textX, this.textY);
+};
