@@ -246,9 +246,17 @@ var mouseOutline = {
     color: "red",
    
     drawOutline: function() {
+        // Tower Placement Rectangle
         ctx.lineWidth = '3';
         ctx.strokeStyle = this.color;
         ctx.strokeRect(this.x, this.y, this.width, this.height); 
+        
+        // Tower Range Circle
+        ctx.beginPath();
+        ctx.lineWidth  = '1.5';
+        ctx.strokeStyle = "gray";
+        ctx.arc(this.x + 18.5, this.y + 18.5 ,100, 0, 2*Math.PI);
+        ctx.stroke();
     },
  };
  

@@ -42,6 +42,7 @@ function tower(x,y) {
     this.removeTower = false;  // Set to true have tower removed
     this.target = [null, null, null, null];
     this.maxTargets = 1;
+    this.laserFired = [false, false, false, false];  // Test fix for missing lasers
     
     //Gem Properties
     this.redCount = 0;
@@ -186,6 +187,16 @@ tower.prototype.drawTurret = function() {
     ctx.stroke();
 };
 
+/* Rendering Function: Draws the tower's range */
+tower.prototype.drawRange = function() {
+        // Tower Range Circle
+        ctx.beginPath();
+        ctx.lineWidth  = '1.5';
+        ctx.strokeStyle = "gray";
+        ctx.arc(this.centerX, this.centerY, this.range, 0, 2*Math.PI);
+        ctx.stroke();
+}
+
 /* Rendering Function: Draws the tower's menu outline */
 tower.prototype.drawOutline = function() {
     ctx.lineWidth = '2';
@@ -275,6 +286,9 @@ tower.prototype.drawLaser = function(j) {
     ctx.strokeStyle = this.laserColor;
     ctx.lineWidth = this.laserWidth;
     ctx.stroke();
+    
+    // <<< TEST FIX FOR LASER ISSUE >>
+    this.laserFired[j] = true;
 };
 
 tower.prototype.drawCost = function(alpha) {
@@ -377,7 +391,12 @@ tower.prototype.attack = function(unitList){
             //if it shoots at least once reset fire count
             if (tower.target[j] != null){
                 tower.fireRateCount = 0;
-                tower.shoot(j); //pass in what target its shooting
+                //tower.shoot(j); //pass in what target its shooting
+                // <<< TEST FIX FOR LASER ISSUE >>
+                if (tower.laserFired[j]) {
+                    tower.shoot(j);
+                    tower.laserFired[j] = false;  // Reset firing flag
+                }
             }
         }
     }

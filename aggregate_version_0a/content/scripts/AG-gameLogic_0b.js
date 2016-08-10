@@ -172,8 +172,9 @@ var renderLoop = function() {
     //Draw menu for towers
     for(i in towerList) {
         if(towerList[i].clicked == true) {
-            towerList[i].drawMenu();
             towerList[i].drawOutline();
+            towerList[i].drawRange();
+            towerList[i].drawMenu();  // Draw last so it's on top
         }
     }
     
