@@ -48,7 +48,7 @@ function tower(x,y) {
     this.blueCount = 0;
     this.greenCount = 0;
     this.gemCount = 0;
-    this.gemCosts = [150, 250, 300];
+    this.gemCosts = [150, 200, 250];
   
     // Tower Upgrade Gems
     this.slot1 = {
@@ -436,10 +436,10 @@ function modifyTower(tower){
     tower.checkColors();
     
     //set of factors gems control
-    var DAMAGE_FACTOR = [1, 1.5, 2, 2.5];
+    var DAMAGE_FACTOR = [1, 2, 3, 4];
     var RANGE_FACTOR = [1, 2, 3, 4];
     var TARGET_FACTOR = [0, 1, 2, 3];
-    var TOWER_LEVEL = [1, 2, 4, 8];
+    var TOWER_LEVEL = [1, 3, 9, 27];
     
     // Tower Attack Attributes
     tower.laserColor = getColor(tower.redCount * 3,tower.greenCount * 3, tower.blueCount * 3);

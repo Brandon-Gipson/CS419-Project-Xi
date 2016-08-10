@@ -238,165 +238,62 @@ var greenGemButton = {
  * An object to draw bounds outline around
  * mouse for tower placement
  * ***************************************/
- var mouseOutline = {
-   x: 0,
-   y: 0,
-   width: 40,
-   height: 40,
-   color: "red",
+var mouseOutline = {
+    x: 0,
+    y: 0,
+    width: 40,
+    height: 40,
+    color: "red",
    
-   drawOutline: function() {
-    ctx.lineWidth = '3';
-    ctx.strokeStyle = this.color;
-    ctx.strokeRect(this.x, this.y, this.width, this.height); 
-   },
-
+    drawOutline: function() {
+        ctx.lineWidth = '3';
+        ctx.strokeStyle = this.color;
+        ctx.strokeRect(this.x, this.y, this.width, this.height); 
+    },
  };
-
-/***************************************
- * An object that contains coordinates
- * for the game map's boundaries for the
- * purpose of tower placing retrictions
- * **************************************/
-var mapBoundaryList = [
  
-upperLeftBorder = {
-    x: 0,
-    y: 0,
-    width: 10,
-    height: 360
-  },
-  
-  upperLeftHearts = {
-    x: 0,
-    y: 0,
-    width: 220,
-    height: 60
-  },
-  
-  upperLeftTree = {
-    x: 0,
-    y: 170,
-    width: 110,
-    height: 90
-  },
-  
-  upperLeftNP = {
-    x: -100,
-    y: 360,
-    width: 110,
-    height: 60
-  },
-   
-  upperMidSec = {
-    x: 160,
-    y: 0,
-    width: 810,
-    height: 10
-  },
-  
-  upperRightGold = {
-    x: 902,
-    y: 0,
-    width: 220,
-    height: 60
-  },
-  
-  upperRightTree = {
-    x: 995,
-    y: 250,
-    width: 130,
-    height: 80
-  },
-  
-  upperRightNP = {
-    x: 1110,
-    y: 0,
-    width: 100,
-    height: 420
-  },
-   
-  bottomLeftByButtons = {
-    x: 0,
-    y: 573,
-    width: 140,
-    height: 50
-  },
-  
-  bottomLeftSec = {
-    x: 140,
-    y: 600,
-    width: 220,
-    height: 10
-  },
-  
-  bottomLeftNP = {
-    x: -100,
-    y: 490,
-    width: 110,
-    height: 100
-  },
-   
-  bottomMidSec = {
-    x: 360,
-    y: 300,
-    width: 390,
-    height: 360
-  },
-   
-  bottomRightSec = {
-    x: 750,
-    y: 600,
-    width: 370,
-    height: 10
-  },
-  
-  bottomRightNP = {
-    x: 1110,
-    y: 490,
-    width: 100,
-    height: 110
-  }
+/***************************** Game Boundries ********************************/
+
+/*****************************************************************************
+ * An object that contains coordinates for the game's map boundaries for the
+ * purpose of tower placing retrictions.
+ * **************************************************************************/
+var mapBoundaryList = [
+    upperLeftBorder = { x: 0, y: 0, width: 10, height: 360 },
+    upperLeftHearts = { x: 0, y: 0, width: 220, height: 60 },
+    upperLeftTree = { x: 0, y: 170, width: 110, height: 90 },
+    upperLeftNP = { x: -100, y: 360, width: 110, height: 60 },
+    upperMidSec = { x: 160, y: 0, width: 810, height: 10 },
+    upperRightGold = { x: 902, y: 0, width: 220, height: 60 },
+    upperRightTree = { x: 995, y: 250, width: 130, height: 80 },
+    upperRightNP = { x: 1110, y: 0, width: 100, height: 420 },
+    bottomLeftByButtons = { x: 0, y: 573, width: 140, height: 50 },
+    bottomLeftSec = { x: 140, y: 600, width: 220, height: 10 },
+    bottomLeftNP = { x: -100, y: 490, width: 110, height: 100 },
+    bottomMidSec = { x: 360, y: 300, width: 390, height: 360 },
+    bottomRightSec = { x: 750, y: 600, width: 370, height: 10 },
+    bottomRightNP = { x: 1110, y: 490, width: 100, height: 110 }
 ];
 
-/**************************************
- * An object that contains coordinates
- * for the game map's boundaries for the
- * purpose of tower placing retrictions
- * **************************************/
+/*****************************************************************************
+ * An object that contains coordinates for the game's path boundaries for the
+ * purpose of tower placing retrictions.
+ * **************************************************************************/
 var pathBoundaryList = [
-  pathPart1 = {
-    x: 0,
-    y: 420,
-    width: 290,
-    height: 70
-  },
-  
-  pathPart2 = {
-    x: 220,
-    y: 127,
-    width: 70,
-    height: 300
-  },
-  
-  pathPart3 = {
-    x: 220,
-    y: 120,
-    width: 690,
-    height: 70
-  },
-  
-  pathPart4 = {
-    x: 840,
-    y: 127,
-    width: 70,
-    height: 300
-  },
-  
-  pathPart5 = {
-    x: 840,
-    y: 420,
-    width: 270,
-    height: 70
-  }
+    pathPart1 = { x: 0, y: 420, width: 290, height: 70 },
+    pathPart2 = { x: 220, y: 127, width: 70, height: 300 },
+    pathPart3 = { x: 220, y: 120, width: 690, height: 70 },
+    pathPart4 = { x: 840, y: 127, width: 70, height: 300 },
+    pathPart5 = { x: 840, y: 420, width: 270, height: 70 }
 ];
+
+/*****************************************************************************
+ * Draws the speficied boundry
+ * **************************************************************************/
+function drawBoundry(context, bList) {
+    for (var i in bList) {
+        //context.fillStyle = "red";
+        context.fillStyle = "rgba(255, 0, 0, 0.5)";  // RED w/ 50% opacity
+        context.fillRect(bList[i].x, bList[i].y, bList[i].width, bList[i].height);
+    }
+}

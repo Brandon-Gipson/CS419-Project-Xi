@@ -279,3 +279,32 @@
    function clickTest(obj, mx, my) {
     return ((obj.x <= mx) && (obj.x + obj.width >= mx) && (obj.y <= my) && (obj.y + obj.height >= my))
    }
+   
+   window.onkeyup = function(e) {
+   var key = e.keyCode ? e.keyCode : e.which;
+
+   if (key == 49) {
+       newTowerButton.press = true;
+       greenGemButton.press = false;
+       blueGemButton.press = false;
+       redGemButton.press = false;
+   }
+   else if (key == 50) {
+       redGemButton.press = true;
+       greenGemButton.press = false;
+       blueGemButton.press = false;
+       newTowerButton.press = false;
+   }
+   else if (key == 51) {
+       blueGemButton.press = true;
+       newTowerButton.press = false;
+       greenGemButton.press = false;
+       redGemButton.press = false;
+   }
+   else if (key == 52) {
+       greenGemButton.press = true;
+       blueGemButton.press = false;
+       redGemButton.press = false;
+       newTowerButton.press = false;
+   }
+}

@@ -203,8 +203,8 @@ var logicLoop = function() {
     	if (unitDelay < 0) { 
 	    	spawnUnit(curWave);  // Spawn next unit
 	    	unitDelay = unitDelayMax;  // Reset unit Delay
-	    	console.log(waveUnits.length);
-	    	console.log(waveUnits);
+	    	//console.log(waveUnits.length);
+	    	//console.log(waveUnits);
 	    	if (curWave.unitCount <= 0) {
 	    	    if ((curWave.waveNumber + 1) >= waveUnits.length) { // End of Game
 	    	        gameOver = true;  // Set game over flag
@@ -234,14 +234,14 @@ var logicLoop = function() {
     
     //console.log("runWave: " + runWave + "; curWave: " + curWave.waveNumber + "; waveCountDown: " + waveCountDown);
     
-    // Replace Hearts
+    // Check condition of hearts
     if (hearts.current <= 0) {
         gameOver = true;
         bgm.pause();
         gameOverSound.play();
     }
     
-    if(wave_banner.currentWave >= 6){
+    if(wave_banner.currentWave > waveUnits.length){
         gameWon = true;
         bgm.pause();
         gameWinSound.play();
@@ -263,6 +263,7 @@ var logicLoop = function() {
     setTimeout(logicLoop, 1000/frameRate);
 };
 
+/************************** On Load Function ********************************/
 window.onload = function() {
     loadPath();
     loadPlayer();

@@ -63,7 +63,12 @@ function spawnUnit(wave) {
 function createWave(waveNumber){
     this.waveNumber = waveNumber;
     this.units = waveUnits[waveNumber];
-    this.healthMod = waveNumber+1;
+    if (waveNumber == 0) {
+        this.healthMod = 1;
+    }
+    else {
+        this.healthMod = Math.pow(2, waveNumber);
+    }
     this.unitCount = 0;
     for (var i = 0; i < this.units.length; i++){
         this.unitCount += this.units[i].count;
@@ -79,22 +84,22 @@ var waveUnits = [];
 //wave 1
 waveUnits.push(
     [
-        {count: 55, r: 0, g: 0, b: 0},
-        {count: 15, r: 1, g: 0, b: 0},
-        {count: 15, r: 0, g: 1, b: 0},
+        //{count: 55, r: 0, g: 0, b: 0},
+        //{count: 15, r: 1, g: 0, b: 0},
+        //{count: 15, r: 0, g: 1, b: 0},
         {count: 15, r: 0, g: 0, b: 1}
     ]
 );
 //wave 2
 waveUnits.push(
     [
-        {count: 25, r: 0, g: 0, b: 0},
-        {count: 25, r: 1, g: 0, b: 0},
-        {count: 25, r: 0, g: 1, b: 0},
+        //{count: 25, r: 0, g: 0, b: 0},
+        //{count: 25, r: 1, g: 0, b: 0},
+        //{count: 25, r: 0, g: 1, b: 0},
         {count: 25, r: 0, g: 0, b: 1}
     ]
 );
-
+/* DEBUGGING GAME ENDING - JLP
 //wave 3
 waveUnits.push(
     [
@@ -193,3 +198,4 @@ waveUnits.push(
     
     ]
 );
+*/
