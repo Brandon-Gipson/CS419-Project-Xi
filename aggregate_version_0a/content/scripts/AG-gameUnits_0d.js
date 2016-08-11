@@ -231,15 +231,15 @@ function colorBlock(R,G,B, healthMod) {
     this.blue = B;
     this.gemCount = R + G + B;
     // Set block parameters
-    var HEALTH_FACTOR = [1, 1.5, 2.5, 4];
+    var HEALTH_FACTOR = [1, 1.25, 1.5, 2];
     var SIZE_FACTOR = [0.8, 1, 1.2, 1.5];
-    var SPEED_FACTOR = [1, 1.5, 2.5, 4];
+    var SPEED_FACTOR = [1, 1.25, 1.5, 2];
     
     this.speed = SPEED_FACTOR[G];
-    this.setFullHealth(100 * healthMod * HEALTH_FACTOR[R]);
+    this.setFullHealth(200 * healthMod * HEALTH_FACTOR[R]);
     this.height = 20 * SIZE_FACTOR[B];
     this.width = this.height;
-    this.value = this.gemCount + Math.log2(healthMod);
+    this.value = this.gemCount * Math.log2(healthMod);
     if (this.value == 0){
         this.value = 1;
     }
@@ -253,7 +253,7 @@ function colorBlock(R,G,B, healthMod) {
     if (this.blue > 0) {
         this.onDeath = function() {
             for (var i = 0; i < this.blue; i++) {
-                var newUnit = new colorBlock(0,i+1,0,healthMod/2);  // Spawn a green (for test)
+                var newUnit = new colorBlock(0,i+1,0,healthMod/3);  // Spawn a green (for test)
                 
                 // Set to parent's position & adjust delta values
                 newUnit.x = this.x - this.deltaX + newUnit.deltaX;

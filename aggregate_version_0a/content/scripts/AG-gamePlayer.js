@@ -18,7 +18,7 @@ function Player() {
     this.maxhealth = 5;
     this.health = 5;
     this.waveNumber = 0;
-    this.coins = 500;
+    this.coins = 500;  // DEBUG: 5000, Orig: 500
     this.towerList = [];
     
 };

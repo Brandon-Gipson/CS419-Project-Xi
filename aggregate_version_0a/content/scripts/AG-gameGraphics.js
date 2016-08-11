@@ -127,7 +127,7 @@ var newTowerButton = {
     ctx.font = "Bold 20px Arial";
     ctx.textAlgn = "left";
     ctx.textBaseline = "top";
-    ctx.fillText("T", this.x + 9, this.y);
+    ctx.fillText("1", this.x + 9, this.y);
     
     ctx.lineWidth = '1';
     ctx.strokeStyle = 'black';
@@ -160,7 +160,7 @@ var redGemButton = {
     ctx.font = "Bold 20px Arial";
     ctx.textAlgn = "left";
     ctx.textBaseline = "top";
-    ctx.fillText("G", this.x + 10, this.y);
+    ctx.fillText("2", this.x + 10, this.y);
     
     ctx.lineWidth = '1';
     ctx.strokeStyle = 'black';
@@ -193,7 +193,7 @@ var blueGemButton = {
     ctx.font = "Bold 20px Arial";
     ctx.textAlgn = "left";
     ctx.textBaseline = "top";
-    ctx.fillText("G", this.x + 10, this.y);
+    ctx.fillText("3", this.x + 10, this.y);
     
     ctx.lineWidth = '1';
     ctx.strokeStyle = 'black';
@@ -226,7 +226,7 @@ var greenGemButton = {
     ctx.font = "Bold 20px Arial";
     ctx.textAlgn = "left";
     ctx.textBaseline = "top";
-    ctx.fillText("G", this.x + 10, this.y);
+    ctx.fillText("4", this.x + 10, this.y);
     
     ctx.lineWidth = '1';
     ctx.strokeStyle = 'black';
@@ -267,20 +267,22 @@ var mouseOutline = {
  * purpose of tower placing retrictions.
  * **************************************************************************/
 var mapBoundaryList = [
-    upperLeftBorder = { x: 0, y: 0, width: 10, height: 360 },
-    upperLeftHearts = { x: 0, y: 0, width: 220, height: 60 },
-    upperLeftTree = { x: 0, y: 170, width: 110, height: 90 },
-    upperLeftNP = { x: -100, y: 360, width: 110, height: 60 },
-    upperMidSec = { x: 160, y: 0, width: 810, height: 10 },
-    upperRightGold = { x: 902, y: 0, width: 220, height: 60 },
-    upperRightTree = { x: 995, y: 250, width: 130, height: 80 },
-    upperRightNP = { x: 1110, y: 0, width: 100, height: 420 },
-    bottomLeftByButtons = { x: 0, y: 573, width: 140, height: 50 },
-    bottomLeftSec = { x: 140, y: 600, width: 220, height: 10 },
-    bottomLeftNP = { x: -100, y: 490, width: 110, height: 100 },
-    bottomMidSec = { x: 360, y: 300, width: 390, height: 360 },
-    bottomRightSec = { x: 750, y: 600, width: 370, height: 10 },
-    bottomRightNP = { x: 1110, y: 490, width: 100, height: 110 }
+   leftEdge = { x: 0, y: 0, width: 10, height: 610 },
+   topEdge = { x: 0, y: 0, width: 1120, height: 10} ,
+   rightEdge = {x: 1110, y: 0, width: 10, height: 610 },
+   bottomEdge = {x: 0, y: 600, width: 1120, height: 10}, 
+   boxHearts = {x: 10, y: 10, width: 210, height: 50 },
+   boxCoins = {x: 900, y: 10, width: 210, height: 50 },
+   boxButtons = {x: 10, y: 570, width: 120, height: 30 },
+   boxBanner = {x: 370, y: 539, width: 380, height: 61 },
+   tree_1 = {x: 27, y: 181, width: 80, height: 70 },
+   tree_2 = {x: 411, y: 309, width: 80, height: 70 },
+   tree_3 = {x: 415, y: 452, width: 80, height: 70 },
+   tree_4 = {x: 528, y: 354, width: 80, height: 70 },
+   tree_5 = {x: 553, y: 476, width: 80, height: 70 },
+   tree_6 = {x: 635, y: 308, width: 80, height: 70 },
+   tree_7 = {x: 641, y: 415, width: 80, height: 70 },
+   tree_8 = {x: 997, y: 253, width: 80, height: 70 },
 ];
 
 /*****************************************************************************

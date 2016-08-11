@@ -42,14 +42,14 @@ function tower(x,y) {
     this.removeTower = false;  // Set to true have tower removed
     this.target = [null, null, null, null];
     this.maxTargets = 1;
-    this.laserFired = [false, false, false, false];  // Test fix for missing lasers
+    this.laserFired = [false, false, false, false];  // Fix for missing lasers
     
     //Gem Properties
     this.redCount = 0;
     this.blueCount = 0;
     this.greenCount = 0;
     this.gemCount = 0;
-    this.gemCosts = [150, 200, 250];
+    this.gemCosts = [200, 400, 600];
   
     // Tower Upgrade Gems
     this.slot1 = {
@@ -185,6 +185,31 @@ tower.prototype.drawTurret = function() {
     ctx.lineWidth = '1';
     ctx.strokeStyle = 'black';
     ctx.stroke();
+};
+
+/* Rendering Function: Draws the gems onto the tower (Call after drawTurret!) */
+tower.prototype.drawGems = function() {
+    function drawGemWedge(t, start, stop, color, r) {
+        ctx.beginPath();
+        ctx.moveTo(t.centerX, t.centerY);
+        ctx.arc(t.centerX, t.centerY, r, start, stop, false);
+        ctx.lineTo(t.centerX, t.centerY);
+        ctx.closePath();
+        ctx.lineWidth = '1';
+        ctx.fillStyle = color;
+        ctx.fill();
+    }
+    
+    // Note: Canvas circle is upside down of standard unit circle
+    var p12 = 3* Math.PI / 2;  // 12 o'clock locaiton
+    var p4 = 1 * Math.PI / 6;  // 4 o'clock location
+    var p8 = 5 * Math.PI / 6;  // 8 o'clock locaiton
+    var r = 8;  // Gem circle radius
+    
+    drawGemWedge(this, p12, p4, this.slot1.color, r);  // Gem #1
+    drawGemWedge(this, p4, p8, this.slot2.color, r);  // Gem #2
+    drawGemWedge(this, p8, p12, this.slot3.color, r);  // Gem #3
+    
 };
 
 /* Rendering Function: Draws the tower's range */
@@ -438,7 +463,7 @@ function baseTower(x,y) {
     tower.call(this, x, y);  // Call tower superclass constructor
     this.towerColor = 'gray';
     this.laserColor = getColor(0,0,0);
-    this.damage = 10;
+    this.damage = 20;
     this.cost = 100;
     
     
@@ -458,7 +483,7 @@ function modifyTower(tower){
     var DAMAGE_FACTOR = [1, 2, 3, 4];
     var RANGE_FACTOR = [1, 2, 3, 4];
     var TARGET_FACTOR = [0, 1, 2, 3];
-    var TOWER_LEVEL = [1, 3, 9, 27];
+    var TOWER_LEVEL = [1, 4, 9, 30];
     
     // Tower Attack Attributes
     tower.laserColor = getColor(tower.redCount * 3,tower.greenCount * 3, tower.blueCount * 3);

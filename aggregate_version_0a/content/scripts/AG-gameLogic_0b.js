@@ -27,6 +27,7 @@ var waveDelay = 25;
 var waveDelayMax = 25;
 var runWave = false;
 var waveCountDown = 20;  // Initial countdown is from 20 (others are 10)
+var waveCountDownMax = 20;
 var gameOver = false;
 var gameWon = false;
 
@@ -144,8 +145,10 @@ var renderLoop = function() {
                 towerList[i].drawLaser(j);
             }
         }
-        // Draw turret
-        towerList[i].drawTurret();
+        // Draw Addition Items
+        towerList[i].drawTurret();  // Draw Turret
+        towerList[i].drawGems();  // Draw Gem indicator
+        
     }
     
     //Draw outline for tower button press
@@ -186,7 +189,6 @@ var renderLoop = function() {
 };
 
 var logicLoop = function() {
-    console.log("Game State: " + gameState);
     // Process current game state
     switch (gameState) {
         case GAME_STATE.GAME_WON: // Game Won - Stop Logic
@@ -203,7 +205,6 @@ var logicLoop = function() {
     	    	if (curWave.unitCount <= 0) {  // Current wave if ended
     	    	    if ((curWave.waveNumber + 1) >= waveUnits.length) {  // Check remaining waves
     	    	        // No waves remaining
-    	    	        console.log("Run: End Units");
     	    	        gameState = GAME_STATE.END_UNITS;  // Set game to keep running logic
     	    	    }
     	    	    else {
@@ -211,7 +212,7 @@ var logicLoop = function() {
     		    	    curWave = createWave(curWave.waveNumber + 1);  // Next wave
     		    	    wave_banner.currentWave = curWave.waveNumber + 1;  // Set banner wave number (+1 for 0 indexing)
     		    	    gameState = GAME_STATE.COUNTDOWN;  // Next game state: COUNTDOWN
-    	    		    waveCountDown = 10;  // Set counddown timer
+    	    		    waveCountDown = waveCountDownMax;  // Set counddown timer
     	    		    wave_banner.countDown = waveCountDown;  // Update banner
         	        }
     		    }
@@ -239,7 +240,6 @@ var logicLoop = function() {
 
     // Check condition of hearts
     if (hearts.current <= 0) {  // Out of hearts
-        console.log("Hearts: Game Over");
         gameState = GAME_STATE.GAME_OVER;
         bgm.pause();
         gameOverSound.play();
@@ -247,7 +247,6 @@ var logicLoop = function() {
     
     // Check remaining units
     if ((gameState == GAME_STATE.END_UNITS) && (unitList.length == 0)) {
-        console.log("Units: Game Won");
         gameState = GAME_STATE.GAME_WON;
         bgm.pause();
         gameWinSound.play();

@@ -84,22 +84,22 @@ var waveUnits = [];
 //wave 1
 waveUnits.push(
     [
-        //{count: 55, r: 0, g: 0, b: 0},
-        //{count: 15, r: 1, g: 0, b: 0},
-        //{count: 15, r: 0, g: 1, b: 0},
+        {count: 55, r: 0, g: 0, b: 0},
+        {count: 15, r: 1, g: 0, b: 0},
+        {count: 15, r: 0, g: 1, b: 0},
         {count: 15, r: 0, g: 0, b: 1}
     ]
 );
 //wave 2
 waveUnits.push(
     [
-        //{count: 25, r: 0, g: 0, b: 0},
-        //{count: 25, r: 1, g: 0, b: 0},
-        //{count: 25, r: 0, g: 1, b: 0},
+        {count: 25, r: 0, g: 0, b: 0},
+        {count: 25, r: 1, g: 0, b: 0},
+        {count: 25, r: 0, g: 1, b: 0},
         {count: 25, r: 0, g: 0, b: 1}
     ]
 );
-/* DEBUGGING GAME ENDING - JLP
+
 //wave 3
 waveUnits.push(
     [
@@ -179,11 +179,12 @@ waveUnits.push(
 //wave 9
 waveUnits.push(
     [
-        {count: 20, r: 3, g: 2, b: 0},
+        
         {count: 20, r: 3, g: 0, b: 2},
-        {count: 20, r: 2, g: 3, b: 0},
-        {count: 20, r: 0, g: 2, b: 3},
-        {count: 20, r: 3, g: 3, b: 0}
+        {count: 20, r: 2, g: 3, b: 1},
+        {count: 20, r: 1, g: 2, b: 3},
+        {count: 20, r: 3, g: 3, b: 0},
+        {count: 20, r: 0, g: 3, b: 3},
     
     ]
 );
@@ -191,11 +192,22 @@ waveUnits.push(
 //wave 10
 waveUnits.push(
     [
-        {count: 20, r: 3, g: 3, b: 0},
-        {count: 20, r: 0, g: 3, b: 3},
-        {count: 20, r: 3, g: 0, b: 3},
-        {count: 40, r: 3, g: 3, b: 3}
+        //90
+        {count: 15, r: 3, g: 1, b: 1},
+        {count: 15, r: 1, g: 3, b: 1},
+        {count: 15, r: 1, g: 1, b: 3},
+        {count: 15, r: 2, g: 2, b: 1},
+        {count: 15, r: 2, g: 1, b: 2},
+        {count: 15, r: 1, g: 2, b: 2},
+        
+        //10
+        {count: 1, r: 3, g: 2, b: 1},
+        {count: 1, r: 3, g: 1, b: 2},
+        {count: 2, r: 2, g: 3, b: 1},
+        {count: 1, r: 2, g: 1, b: 3},
+        {count: 2, r: 1, g: 3, b: 2},
+        {count: 2, r: 1, g: 2, b: 3},
+        {count: 1, r: 2, g: 2, b: 2},
     
     ]
 );
-*/
